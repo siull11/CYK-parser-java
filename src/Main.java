@@ -37,6 +37,7 @@ public class Main {
             @Override
             public void read(String fileName) {
                 System.out.println("ERROR: Wrong read method called");
+                System.exit(1);
             }
         };
         g.read(rules);
@@ -48,6 +49,7 @@ public class Main {
             @Override
             public void read(String[] rules) {
                 System.out.println("ERROR: Wrong read method called");
+                System.exit(1);
             }
 
             @Override
