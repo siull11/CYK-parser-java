@@ -1,71 +1,32 @@
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Main {
     public static void main(String[] args) {
         System.out.println("Start");
 
-        String[] rules = new String[]{"S aS", "S a", "X x"};
-        Grammar g = createGrammarFromStringArr(rules);
+        String[] rules = new String[]{"S SS", "S s", "X x", "S XX"};
 
-        System.out.println(g.getNonTerminals());
-        System.out.println(g.getRules());
-        System.out.println(g.getRule('X'));
-        Parser.parseNaive(g, "ab");
-    }
 
-    private static Grammar createGrammarFromStringArr(String[] rules) {
-        Grammar g = new Grammar() {
-            @Override
-            public void read(String[] input) {
-                HashMap<Character, Integer> nonTerminals = getNonTerminals();
-                ArrayList<ArrayList<String>> rules = getRules();
-                int counter = 0; // Replace counter with nonTerminals.length()-1 ???
-                for (String rule : input) {
-                    char nonTerminal = rule.charAt(0);
-                    if (!nonTerminals.containsKey(nonTerminal)) {
-                        nonTerminals.put(nonTerminal, counter++);
-                        rules.add(new ArrayList<>());
-                    }
-                    int index = nonTerminals.get(nonTerminal);
-                    String result = rule.substring(2);
-                    rules.get(index).add(result);
-                }
-            }
+        Grammar g = new Grammar(rules);
 
-            @Override
-            public void read(String fileName) {
-                System.out.println("ERROR: Wrong read method called");
-                System.exit(1);
-            }
-        };
-        g.read(rules);
-        return g;
-    }
+//        System.out.println("id: " + g.ids);
+//        System.out.println("reverse id: " + g.reverseIds);
+//        System.out.println("rules: " + g.rules);
+//        System.out.println("produces t: " + g.prodT);
+//        System.out.println("produces nt: " + g.prodNT);
+        System.out.println("rules2: " + g.rules2);
+        System.out.println("produces t2: " + g.prodT2);
 
-    private static Grammar createGrammarFromFile(String fileName) { // NOT implemented !!!
-        Grammar g = new Grammar() {
-            @Override
-            public void read(String[] rules) {
-                System.out.println("ERROR: Wrong read method called");
-                System.exit(1);
-            }
+//        Parser p = new ParserNaive();
+        Parser p = new ParserBU();
 
-            @Override
-            public void read(String fileName) {
-                try {
-                    InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
-                } catch (Exception e) {
-                    System.out.println(e.toString());
-                    System.exit(1);
-                }
-                HashMap<Character, Integer> nonTerminals = getNonTerminals();
-                ArrayList<ArrayList<String>> rules = getRules();
-
-            }
-        };
-        g.read(fileName);
-        return g;
+        System.out.println("Ans: " + p.parse(g, "ssxx"));
     }
 }
+
+//                InputStream stream;
+//                try {
+//                    stream = getClass().getClassLoader().getResourceAsStream(fileName);
+//                } catch (Exception e) {
+//                    System.out.println(e.toString());
+//                    System.exit(1);
+//                }
+//
