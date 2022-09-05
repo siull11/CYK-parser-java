@@ -10,8 +10,8 @@ public abstract class Grammar { // byta från public till getters!!!
     public HashMap<Character, Integer> ids;
     public int[][][] NT_to_NTs;
     public int[][][] NTs_to_NT;
-    public char[] NT_to_T; // multiple nts can produce same t & one NT can produce multiple different t!!!!
-    public HashMap<Character, Integer> T_to_NT;
+    public char[][] NT_to_T; // multiple nts can produce same t & one NT can produce multiple different t!!!!
+    public HashMap<Character, Integer[]> T_to_NT;
 
     public Grammar(String[] rules) {
         parseGrammar(rules);
@@ -26,7 +26,6 @@ public abstract class Grammar { // byta från public till getters!!!
                 rules.add(sc.nextLine());
             }
             String[] a = rules.toArray(String[]::new);
-            System.out.println(Arrays.toString(a));
             parseGrammar(a);
         } catch (Exception e) {
             System.out.println("Failed to read from file. Error: " + e);
@@ -49,7 +48,7 @@ public abstract class Grammar { // byta från public till getters!!!
                 ntRules.add(rule);
                 addId(rule.charAt(2));
                 addId(rule.charAt(3));
-            } else {
+            } else { // Produces terminal
                 tRules.add(rule);
             }
         }
@@ -58,21 +57,24 @@ public abstract class Grammar { // byta från public till getters!!!
         NT_to_NTs = new int[numNT][][];
         NTs_to_NT = new int[numNT][numNT][];
 
+        // Parse non-terminal rules
         for (String rule: ntRules) {
             int sourceId = ids.get(rule.charAt(0));
             int resId1 = ids.get(rule.charAt(2));
             int resId2 = ids.get(rule.charAt(3));
 
-            if (NT_to_NTs[sourceId] == null) {
-                NT_to_NTs[sourceId] = new int[numNT][2];
+            // Fill non-terminal to non-terminals
+            if (NT_to_NTs[sourceId] == null) { //GÅr nog att förbättra som för t!!!
+                NT_to_NTs[sourceId] = new int[numNT][2];// kan ta bort 2 !!!
             }
             int[][] arr1 = new int[NT_to_NTs[sourceId].length + 1][2]; // kan ta bort 2 !!!
             System.arraycopy(NT_to_NTs[sourceId], 0, arr1, 0, NT_to_NTs[sourceId].length);
             arr1[NT_to_NTs[sourceId].length] = new int[]{resId1, resId2};
             NT_to_NTs[sourceId] = arr1;
 
-            if (NTs_to_NT[resId1][resId2] == null) {
-                NTs_to_NT[resId1][resId2] = new int[0];
+            // Fill non-terminals to non-terminal
+            if (NTs_to_NT[resId1][resId2] == null) { //GÅr nog att förbättra som för t!!!
+                NTs_to_NT[resId1][resId2] = new int[0]; // ÄNDRA!!!
             }
             int[] arr2 = new int[NTs_to_NT[resId1][resId2].length + 1];
             System.arraycopy(NTs_to_NT[resId1][resId2], 0, arr2, 0, NTs_to_NT[resId1][resId2].length);
@@ -80,15 +82,34 @@ public abstract class Grammar { // byta från public till getters!!!
             NTs_to_NT[resId1][resId2] = arr2;
         }
 
-        NT_to_T = new char[numNT];
+        NT_to_T = new char[numNT][];
         T_to_NT = new HashMap<>();
 
+        // Parse terminal rules
         for (String rule: tRules) {
             int ntId = ids.get(rule.charAt(0));
             char t = rule.charAt(2);
 
-            NT_to_T[ntId] = t;
-            T_to_NT.put(t, ntId);
+            // Fill non-terminal to terminal
+            if (NT_to_T[ntId] == null) {
+                NT_to_T[ntId] = new char[1];
+                NT_to_T[ntId][0] = t;
+            } else {
+                char[] arr = new char[NT_to_T[ntId].length + 1];
+                System.arraycopy(NT_to_T[ntId], 0, arr, 0, NT_to_T[ntId].length);
+                arr[arr.length - 1] = t;
+                NT_to_T[ntId] = arr;
+            }
+
+            // Fill terminal to non-terminal
+            if (T_to_NT.containsKey(t)) {
+                Integer[] arr = new Integer[T_to_NT.get(t).length + 1];
+                System.arraycopy(T_to_NT.get(t), 0, arr, 0, T_to_NT.get(t).length);
+                arr[arr.length - 1] = ntId;
+                T_to_NT.put(t, arr);
+            } else {
+                T_to_NT.put(t, new Integer[]{ntId});
+            }
         }
     }
 

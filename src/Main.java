@@ -6,8 +6,9 @@ public class Main {
 //        Grammar g = new GrammarDyck();
 //        Grammar g = new GrammarStupid();
 
-        Parser p = new ParserBU();
 //        Parser p = new ParserNaive();
+//        Parser p = new ParserTD();
+        Parser p = new ParserBU();
 
         printRes(p.parse(g, "((())(()))"), p.getCounter());
 //        printRes(p.parse(g, "aaaaa"), p.getCounter());

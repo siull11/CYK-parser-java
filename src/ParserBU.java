@@ -12,10 +12,10 @@ public class ParserBU implements Parser {
         // Convert terminals to non-terminals (fill bottom row)
         for (int i = 0; i < n; i++) {
             char t = s.charAt(i);
-            if (!g.T_to_NT.containsKey(t)) {
-                return false;
+            if (!g.T_to_NT.containsKey(t)) return false;
+            for (int nt: g.T_to_NT.get(t)) {
+                res[i][0][nt] = true;
             }
-            res[i][0][g.T_to_NT.get(t)] = true;
         }
 
         // Fill rest of the table
