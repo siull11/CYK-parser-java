@@ -1,6 +1,8 @@
-import java.io.InputStream;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public abstract class Grammar { // byta från public till getters!!!
     public int start;
@@ -12,6 +14,27 @@ public abstract class Grammar { // byta från public till getters!!!
     public HashMap<Character, Integer> T_to_NT;
 
     public Grammar(String[] rules) {
+        parseGrammar(rules);
+    }
+
+    public Grammar(String fileName) {
+        try {
+            File file = new File(fileName);
+            Scanner sc = new Scanner(file);
+            ArrayList<String> rules = new ArrayList<>();
+            while (sc.hasNextLine()) {
+                rules.add(sc.nextLine());
+            }
+            String[] a = rules.toArray(String[]::new);
+            System.out.println(Arrays.toString(a));
+            parseGrammar(a);
+        } catch (Exception e) {
+            System.out.println("Failed to read from file. Error: " + e);
+            System.exit(e.hashCode());
+        }
+    }
+
+    private void parseGrammar(String[] rules) {
         start = 0;
         ids = new HashMap<>();
 
@@ -66,16 +89,6 @@ public abstract class Grammar { // byta från public till getters!!!
 
             NT_to_T[ntId] = t;
             T_to_NT.put(t, ntId);
-        }
-    }
-
-    public Grammar(String fileName) {
-        InputStream stream;
-        try {
-            stream = getClass().getClassLoader().getResourceAsStream(fileName);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            System.exit(404);
         }
     }
 

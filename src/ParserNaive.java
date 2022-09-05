@@ -1,14 +1,15 @@
-import java.util.HashSet;
-
+//import java.util.HashSet;
+//
 //public class ParserNaive implements Parser {
 //    private int counter;
+//
 //    @Override
-//    public boolean parse(GrammarWork g, String s) {
+//    public boolean parse(Grammar g, String s) {
 //        counter = 0;
 //        return recursive(g, s, 0);
 //    }
 //
-//    public boolean recursive(GrammarWork g, String s, int i) {
+//    public boolean recursive(Grammar g, String s, int i) {
 //        if (i == s.length()) {
 //            return true;
 //        }
@@ -19,8 +20,8 @@ import java.util.HashSet;
 //        HashSet<Integer> under = g.prodT.get(c);
 //        HashSet<Integer> diagonal = g.prodT.get(s.charAt(i+1));
 //        HashSet<Integer> newCell = new HashSet<>();
-//        for (int j : under) {
-//            for (int k : diagonal) {
+//        for (int j: under) {
+//            for (int k: diagonal) {
 //                if (j == k) {
 //                    newCell.add(k);
 //                }
@@ -35,6 +36,6 @@ import java.util.HashSet;
 //
 //    @Override
 //    public int getCounter() {
-//        return 0;
+//        return counter;
 //    }
 //}
