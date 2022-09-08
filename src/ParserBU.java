@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.util.Arrays;
 
 public class ParserBU implements Parser {
 
@@ -24,7 +26,6 @@ public class ParserBU implements Parser {
                 boolean[] newCell = new boolean[g.numNT];
 
                 for (int i = 0; i < y; i++) { // loop over child cells
-                    counter++; // Count number of loops (FEL STÄLLE???)
                     boolean[] under = table[x][i];
                     boolean[] diagonal = table[x+i+1][y-i-1];
 
@@ -33,8 +34,9 @@ public class ParserBU implements Parser {
 
                         for (int d = 0; d < g.numNT; d++) { // loop over non-terminals diagonal
                             if (!diagonal[d]) continue;
+                            counter++; // Count number of loops
 
-                            int[] nts = g.NTs_to_NT[u][d]; // get non-terminals that produce u and d
+                            Integer[] nts = g.NTs_to_NT[u][d]; // get non-terminals that produce u and d
                             if (nts == null) continue;
 
                             for (int nt: nts) newCell[nt] = true;
@@ -45,6 +47,55 @@ public class ParserBU implements Parser {
             }
         }
         return table[0][n-1][g.start];
+    }
+
+    public boolean parse2(Grammar g, String s) {
+        int n = s.length();
+        Integer[][][] table = new Integer[n][n][];
+
+        // Convert terminals to non-terminals (fill bottom row)
+        for (int i = 0; i < n; i++) {
+            char t = s.charAt(i);
+            if (!g.T_to_NTs.containsKey(t)) return false;
+            for (int nt: g.T_to_NTs.get(t)) {
+                if (table[i][0] == null) table[i][0] = new Integer[]{nt};
+                else table[i][0] = Arrays.copyOf(table[i][0], table[i][0].length+1);
+            }
+        }
+        // Fill rest of the table
+        for (int y = 1; y < n; y++) { // loop over rows
+            for (int x = 0; x < n-y; x++) { // loop over columns
+                Integer[] newCell = new Integer[0];
+                for (int i = 0; i < y; i++) { // loop over child cells
+                    Integer[] under = table[x][i];
+                    Integer[] diagonal = table[x+i+1][y-i-1];
+                    if (under == null || diagonal == null) continue;
+//                    System.out.println(Arrays.toString(under) + Arrays.toString(diagonal));
+                    for (int u: under) { // loop over non-terminals under
+                        for (int d: diagonal) { // loop over non-terminals diagonal
+                            counter++; // Count number of loops
+                            Integer[] nts = g.NTs_to_NT[u][d];
+                            if (nts != null) {
+                                newCell = new Integer[newCell.length+nts.length];
+                                System.arraycopy(nts, 0, newCell, 0, newCell.length+nts.length);
+                            }
+                        }
+                    }
+                }
+                if (newCell.length != 0) table[x][y] = newCell;
+            }
+        }
+
+        for (Integer[][] row: table) {
+            System.out.println(Arrays.deepToString(row)); // DEBUG
+        }
+
+
+        if (table[0][n-1] == null) return false;
+        for (int nt: table[0][n-1]) {
+            if (nt == g.start) return true;
+        }
+        return false;
     }
 
     @Override

@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,22 +7,19 @@ public class Main {
         Grammar g = new GrammarDyck();
 //        Grammar g = new GrammarStupid();
 
-
-//        System.out.println("ids: "+g.ids);
-//        System.out.println("nt to nts: "+Arrays.deepToString(g.NT_to_NTs));
-//        System.out.println("nt to ts: "+Arrays.deepToString(g.NT_to_Ts));
-//        System.out.println("nts to nt: "+Arrays.deepToString(g.NTs_to_NT));
-//        System.out.print("t to nts: ");
-//        g.T_to_NTs.forEach((k, v) -> System.out.print(k+"->"+Arrays.deepToString(v)+", "));
-//        System.out.println();
-
-
+        System.out.println(g.ids);
 
 //        Parser p = new ParserNaive();
-        Parser p = new ParserTD();
-//        Parser p = new ParserBU();
+//        Parser p = new ParserTD();
+        ParserBU p = new ParserBU();
+
+
 // (()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))
         printRes(p.parse(g, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))"), p.getCounter());
+    }
+
+    private static void runTests() {
+
     }
 
     private static void printRes(boolean accept, int counter) {

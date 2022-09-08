@@ -8,7 +8,7 @@ public abstract class Grammar { // byta från public attr till getters!!!
     public int numNT;
     public HashMap<Character, Integer> ids;
     public int[][][] NT_to_NTs;
-    public int[][][] NTs_to_NT;
+    public Integer[][][] NTs_to_NT; //GÖRA TILL HASHSET???
     public char[][] NT_to_Ts;
     public HashMap<Character, Integer[]> T_to_NTs;
 
@@ -54,7 +54,7 @@ public abstract class Grammar { // byta från public attr till getters!!!
 
         numNT = ids.size();
         NT_to_NTs = new int[numNT][][];
-        NTs_to_NT = new int[numNT][numNT][];
+        NTs_to_NT = new Integer[numNT][numNT][];
 
         // Parse non-terminal rules
         for (String rule: ntRules) {
@@ -75,9 +75,9 @@ public abstract class Grammar { // byta från public attr till getters!!!
 
             // Fill non-terminals to non-terminal
             if (NTs_to_NT[resId1][resId2] == null) {
-                NTs_to_NT[resId1][resId2] = new int[]{sourceId};
+                NTs_to_NT[resId1][resId2] = new Integer[]{sourceId};
             } else {
-                int[] arr = new int[NTs_to_NT[resId1][resId2].length + 1];
+                Integer[] arr = new Integer[NTs_to_NT[resId1][resId2].length + 1];
                 System.arraycopy(NTs_to_NT[resId1][resId2], 0, arr, 0, NTs_to_NT[resId1][resId2].length);
                 arr[arr.length - 1] = sourceId;
                 NTs_to_NT[resId1][resId2] = arr;
