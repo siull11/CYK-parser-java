@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -10,8 +9,8 @@ public abstract class Grammar { // byta från public till getters!!!
     public HashMap<Character, Integer> ids;
     public int[][][] NT_to_NTs;
     public int[][][] NTs_to_NT;
-    public char[][] NT_to_T; // multiple nts can produce same t & one NT can produce multiple different t!!!!
-    public HashMap<Character, Integer[]> T_to_NT;
+    public char[][] NT_to_Ts; // multiple nts can produce same t & one NT can produce multiple different t!!!!
+    public HashMap<Character, Integer[]> T_to_NTs;
 
     public Grammar(String[] rules) {
         parseGrammar(rules);
@@ -82,8 +81,8 @@ public abstract class Grammar { // byta från public till getters!!!
             NTs_to_NT[resId1][resId2] = arr2;
         }
 
-        NT_to_T = new char[numNT][];
-        T_to_NT = new HashMap<>();
+        NT_to_Ts = new char[numNT][];
+        T_to_NTs = new HashMap<>();
 
         // Parse terminal rules
         for (String rule: tRules) {
@@ -91,24 +90,24 @@ public abstract class Grammar { // byta från public till getters!!!
             char t = rule.charAt(2);
 
             // Fill non-terminal to terminal
-            if (NT_to_T[ntId] == null) {
-                NT_to_T[ntId] = new char[1];
-                NT_to_T[ntId][0] = t;
+            if (NT_to_Ts[ntId] == null) {
+                NT_to_Ts[ntId] = new char[1];
+                NT_to_Ts[ntId][0] = t;
             } else {
-                char[] arr = new char[NT_to_T[ntId].length + 1];
-                System.arraycopy(NT_to_T[ntId], 0, arr, 0, NT_to_T[ntId].length);
+                char[] arr = new char[NT_to_Ts[ntId].length + 1];
+                System.arraycopy(NT_to_Ts[ntId], 0, arr, 0, NT_to_Ts[ntId].length);
                 arr[arr.length - 1] = t;
-                NT_to_T[ntId] = arr;
+                NT_to_Ts[ntId] = arr;
             }
 
             // Fill terminal to non-terminal
-            if (T_to_NT.containsKey(t)) {
-                Integer[] arr = new Integer[T_to_NT.get(t).length + 1];
-                System.arraycopy(T_to_NT.get(t), 0, arr, 0, T_to_NT.get(t).length);
+            if (T_to_NTs.containsKey(t)) {
+                Integer[] arr = new Integer[T_to_NTs.get(t).length + 1];
+                System.arraycopy(T_to_NTs.get(t), 0, arr, 0, T_to_NTs.get(t).length);
                 arr[arr.length - 1] = ntId;
-                T_to_NT.put(t, arr);
+                T_to_NTs.put(t, arr);
             } else {
-                T_to_NT.put(t, new Integer[]{ntId});
+                T_to_NTs.put(t, new Integer[]{ntId});
             }
         }
     }

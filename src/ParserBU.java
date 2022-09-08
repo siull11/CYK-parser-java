@@ -12,8 +12,8 @@ public class ParserBU implements Parser {
         // Convert terminals to non-terminals (fill bottom row)
         for (int i = 0; i < n; i++) {
             char t = s.charAt(i);
-            if (!g.T_to_NT.containsKey(t)) return false;
-            for (int nt: g.T_to_NT.get(t)) {
+            if (!g.T_to_NTs.containsKey(t)) return false;
+            for (int nt: g.T_to_NTs.get(t)) {
                 res[i][0][nt] = true;
             }
         }
