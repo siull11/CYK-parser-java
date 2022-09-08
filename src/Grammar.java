@@ -9,7 +9,7 @@ public abstract class Grammar { // byta från public till getters!!!
     public HashMap<Character, Integer> ids;
     public int[][][] NT_to_NTs;
     public int[][][] NTs_to_NT;
-    public char[][] NT_to_Ts; // multiple nts can produce same t & one NT can produce multiple different t!!!!
+    public char[][] NT_to_Ts;
     public HashMap<Character, Integer[]> T_to_NTs;
 
     public Grammar(String[] rules) {
@@ -63,22 +63,25 @@ public abstract class Grammar { // byta från public till getters!!!
             int resId2 = ids.get(rule.charAt(3));
 
             // Fill non-terminal to non-terminals
-            if (NT_to_NTs[sourceId] == null) { //GÅr nog att förbättra som för t!!!
-                NT_to_NTs[sourceId] = new int[numNT][2];// kan ta bort 2 !!!
+            if (NT_to_NTs[sourceId] == null) {
+                NT_to_NTs[sourceId] = new int[1][];
+                NT_to_NTs[sourceId][0] = new int[]{resId1, resId2};
+            } else {
+                int[][] arr = new int[NT_to_NTs[sourceId].length + 1][];
+                System.arraycopy(NT_to_NTs[sourceId], 0, arr, 0, NT_to_NTs[sourceId].length);
+                arr[NT_to_NTs[sourceId].length] = new int[]{resId1, resId2};
+                NT_to_NTs[sourceId] = arr;
             }
-            int[][] arr1 = new int[NT_to_NTs[sourceId].length + 1][2]; // kan ta bort 2 !!!
-            System.arraycopy(NT_to_NTs[sourceId], 0, arr1, 0, NT_to_NTs[sourceId].length);
-            arr1[NT_to_NTs[sourceId].length] = new int[]{resId1, resId2};
-            NT_to_NTs[sourceId] = arr1;
 
             // Fill non-terminals to non-terminal
-            if (NTs_to_NT[resId1][resId2] == null) { //GÅr nog att förbättra som för t!!!
-                NTs_to_NT[resId1][resId2] = new int[0]; // ÄNDRA!!!
+            if (NTs_to_NT[resId1][resId2] == null) {
+                NTs_to_NT[resId1][resId2] = new int[]{sourceId};
+            } else {
+                int[] arr = new int[NTs_to_NT[resId1][resId2].length + 1];
+                System.arraycopy(NTs_to_NT[resId1][resId2], 0, arr, 0, NTs_to_NT[resId1][resId2].length);
+                arr[arr.length - 1] = sourceId;
+                NTs_to_NT[resId1][resId2] = arr;
             }
-            int[] arr2 = new int[NTs_to_NT[resId1][resId2].length + 1];
-            System.arraycopy(NTs_to_NT[resId1][resId2], 0, arr2, 0, NTs_to_NT[resId1][resId2].length);
-            arr2[arr2.length - 1] = sourceId;
-            NTs_to_NT[resId1][resId2] = arr2;
         }
 
         NT_to_Ts = new char[numNT][];

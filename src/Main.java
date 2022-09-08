@@ -9,21 +9,21 @@ public class Main {
 //        Grammar g = new GrammarStupid();
 
 
-        System.out.println("ids: "+g.ids);
+//        System.out.println("ids: "+g.ids);
+//        System.out.println("nt to nts: "+Arrays.deepToString(g.NT_to_NTs));
+//        System.out.println("nt to ts: "+Arrays.deepToString(g.NT_to_Ts));
+//        System.out.println("nts to nt: "+Arrays.deepToString(g.NTs_to_NT));
+//        System.out.print("t to nts: ");
+//        g.T_to_NTs.forEach((k, v) -> System.out.print(k+"->"+Arrays.deepToString(v)+", "));
+//        System.out.println();
 
-        System.out.println("nt to nts: "+Arrays.deepToString(g.NT_to_NTs));
-        System.out.println("nt to ts: "+Arrays.deepToString(g.NT_to_Ts));
-
-        System.out.println("nts to nt: "+Arrays.deepToString(g.NTs_to_NT));
-        System.out.println("t to nts: "+g.T_to_NTs.toString());
 
 
-
-//        Parser p = new ParserNaive();
+        Parser p = new ParserNaive();
 //        Parser p = new ParserTD();
-        Parser p = new ParserBU();
-//(()()
-        printRes(p.parse(g, "(()()"), p.getCounter());
+//        Parser p = new ParserBU();
+
+        printRes(p.parse(g, "(())()"), p.getCounter());
     }
 
     private static void printRes(boolean accept, int counter) {
