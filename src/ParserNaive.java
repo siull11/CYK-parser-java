@@ -1,4 +1,5 @@
 public class ParserNaive implements Parser {
+
     private int counter;
     private Grammar g;
     private String s;
@@ -14,14 +15,9 @@ public class ParserNaive implements Parser {
     private boolean recursive(int nt, int i, int j) {
         counter++; // Count number of recursive calls
         if (i == j) { // At bottom of tree, see if terminal can be produced
-            char[] ts = g.NT_to_Ts[nt];
-            if (ts != null) {
-                for (char t: ts) {
-                    if (s.charAt(i) == t) return true;
-                }
-            }
-            return false;
+            return g.canProduceTerminal(nt, s.charAt(i));
         }
+
         // Not at bottom of tree, see which non-terminals can be produced
         int[][] nts = g.NT_to_NTs[nt];
         if (nts != null) {

@@ -115,6 +115,18 @@ public abstract class Grammar { // byta från public attr till getters!!!
         }
     }
 
+    public boolean canProduceTerminal(int nt, char t) {
+        char[] ts = NT_to_Ts[nt];
+        if (ts != null) {
+            for (char t2: ts) {
+                if (t == t2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void addId(char nt) {
         if (!ids.containsKey(nt)) {
             ids.put(nt, ids.size());
