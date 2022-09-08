@@ -19,9 +19,9 @@ public class Main {
 
 
 
-        Parser p = new ParserNaive();
+//        Parser p = new ParserNaive();
 //        Parser p = new ParserTD();
-//        Parser p = new ParserBU();
+        Parser p = new ParserBU();
 
         printRes(p.parse(g, "(())()"), p.getCounter());
     }

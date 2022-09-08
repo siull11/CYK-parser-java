@@ -22,7 +22,7 @@ public class ParserNaive implements Parser {
             }
             return false;
         }
-        // Not at bottom of tree, which non-terminals can be produced
+        // Not at bottom of tree, see which non-terminals can be produced
         int[][] nts = g.NT_to_NTs[nt];
         if (nts != null) {
             for (int[] ntPair: nts) {

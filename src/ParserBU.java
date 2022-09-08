@@ -3,7 +3,7 @@ public class ParserBU implements Parser {
 
     private int counter;
 
-    // Skapa v2 av denna med int arr ist f bool & ksk v3 med HashSet !!!
+    // Skapa v2 av denna med int arr ist f bool & ksk v3 med HashSet?
     @Override
     public boolean parse(Grammar g, String s) {
         int n = s.length();
@@ -24,6 +24,7 @@ public class ParserBU implements Parser {
                 boolean[] newCell = new boolean[g.numNT];
 
                 for (int i = 0; i < y; i++) { // loop over child cells
+                    counter++; // Count number of loops
                     boolean[] under = res[x][i];
                     boolean[] diagonal = res[x+i+1][y-i-1];
 
@@ -36,10 +37,7 @@ public class ParserBU implements Parser {
                             int[] nts = g.NTs_to_NT[u][d]; // get non-terminals that produce u and d
                             if (nts == null) continue;
 
-                            for (int nt: nts) {
-                                newCell[nt] = true;
-                                counter++; // Flytta ???
-                            }
+                            for (int nt: nts) newCell[nt] = true;
                         }
                     }
                 }

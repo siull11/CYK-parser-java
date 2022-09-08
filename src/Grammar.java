@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class Grammar { // byta från public till getters!!!
+public abstract class Grammar { // byta från public attr till getters!!!
     public int start;
     public int numNT;
     public HashMap<Character, Integer> ids;
