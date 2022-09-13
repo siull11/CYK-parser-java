@@ -1,5 +1,4 @@
 public class ParserTD implements Parser {
-
     private int counter;
     private Grammar g;
     private String s;

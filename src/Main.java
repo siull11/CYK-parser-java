@@ -2,75 +2,135 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) {
         System.out.println("Start of program");
-        Grammar g = new GrammarFromFile("dyck.txt");
-//        Grammar g = new GrammarDyck();
-//        Grammar g = new GrammarStupid();
 
         try {
-            runTests(g, 10);
+            runTests(10, 500, 100);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-
-
-//        System.out.println(g.ids);
+//        Grammar g =
+//                new GrammarDyck();
+//                new GrammarStupid();
+//                new GrammarFromFile("dyck.txt");
 
 //        Parser p = new ParserNaive();
 //        Parser p = new ParserTD();
 //        ParserBU p = new ParserBU();
 
 // (()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))
-//        printRes(p.parse(g, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))"), p.getCounter());
+//        printRes(p.parse(g, "()"), p.getCounter());
     }
 
-    private static void runTests(Grammar g, int n) throws IOException { // nt array n???
-        String[] dyckStringsSmall = new String[]{
-                "()",
-                "()()",
-                "(())",
-                "(()())",
-                "()()()()()()()()()()", // 10 pairs, len 20
-                "(((((((((())))))))))",
-//                "()()()()()()()()()()()()()()()()()()()()",  // 20 pairs, len 40
-//                "(((((((((((((((((((())))))))))))))))))))",
-//                "()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()",  // 30 pairs, len 60
-//                "(((((((((((((((((((((((((((((())))))))))))))))))))))))))))))",
-        };
-
-        System.out.println("Naive Dyck small");
-        Parser naive = new ParserNaive();
-        FileWriter file = createFileWriter("naive-dyck.csv");
-        for (String s: dyckStringsSmall) runtTest(g, naive, file, s, n);
-        file.close();
-
-        System.out.println("TD Dyck small");
+    private static void runTests(int runs, int maxLen, int dLen) throws IOException {
+        Grammar gd = new GrammarDyck();
+        Grammar gs = new GrammarStupid();
+        TestStrings ts = new TestStrings(maxLen, dLen);
         Parser td = new ParserTD();
-        file = createFileWriter("td-dyck.csv");
-        for (String s: dyckStringsSmall) runtTest(g, td, file, s, n);
+        Parser bu = new ParserBU();
+
+        // TD
+        System.out.println("TD Dyck inside");
+        FileWriter file = createFileWriter("td-dyck-inside.csv");
+        for (String s: ts.getDyckInsideStrings()) runtTest(gd, td, file, s, runs);
         file.close();
 
-        System.out.println("BU Dyck small");
-        Parser bu = new ParserBU();
-        file = createFileWriter("bu-dyck.csv");
-        for (String s: dyckStringsSmall) runtTest(g, bu, file, s, n);
+        System.out.println("TD Dyck repeat");
+        file = createFileWriter("td-dyck-repeat.csv");
+        for (String s: ts.getDyckRepeatStrings()) runtTest(gd, td, file, s, runs);
+        file.close();
+
+        System.out.println("TD Dyck repeat fail before");
+        file = createFileWriter("td-dyck-repeat-before.csv");
+        for (String s: ts.getDyckRepeatStringsFailBefore()) runtTest(gd, td, file, s, runs);
+        file.close();
+
+        System.out.println("TD Dyck repeat fail after");
+        file = createFileWriter("td-dyck-repeat-after.csv");
+        for (String s: ts.getDyckRepeatStringsFailAfter()) runtTest(gd, td, file, s, runs);
+        file.close();
+
+        System.out.println("TD stupid");
+        file = createFileWriter("td-stupid.csv");
+        for (String s: ts.getStupidStrings()) runtTest(gs, td, file, s, runs);
+        file.close();
+
+        // BU
+        System.out.println("BU Dyck inside");
+        file = createFileWriter("bu-dyck-inside.csv");
+        for (String s: ts.getDyckInsideStrings()) runtTest(gd, bu, file, s, runs);
+        file.close();
+
+        System.out.println("BU Dyck repeat");
+        file = createFileWriter("bu-dyck-repeat.csv");
+        for (String s: ts.getDyckRepeatStrings()) runtTest(gd, bu, file, s, runs);
+        file.close();
+
+        System.out.println("BU Dyck repeat fail before");
+        file = createFileWriter("bu-dyck-repeat-before.csv");
+        for (String s: ts.getDyckRepeatStringsFailBefore()) runtTest(gd, bu, file, s, runs);
+        file.close();
+
+        System.out.println("BU Dyck repeat fail after");
+        file = createFileWriter("bu-dyck-repeat-after.csv");
+        for (String s: ts.getDyckRepeatStringsFailAfter()) runtTest(gd, bu, file, s, runs);
+        file.close();
+
+        System.out.println("BU stupid");
+        file = createFileWriter("bu-stupid.csv");
+        for (String s: ts.getStupidStrings()) runtTest(gs, bu, file, s, runs);
         file.close();
     }
 
-    private static void runtTest(Grammar g, Parser p, FileWriter f, String s, int n) throws IOException {
-        boolean dryrun = p.parse(g, s);
-        long time = 0;
-        int count = 0;
-        for (int i = 0; i < n; i++) {
+
+
+    private static void runtTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
+        p.parse(g, s); // Dry run
+        boolean res = false;
+        int[] count = new int[runs];
+        long[] time = new long[runs];
+        long maxTime = 0;
+        long minTime = Long.MAX_VALUE;
+
+        for (int i = 0; i < runs; i++) { // Do runs test runs
+            // Do run, measure time
             long t1 = System.nanoTime();
-            boolean res = p.parse(g, s);
+            res = p.parse(g, s);
             long t2 = System.nanoTime();
-            time += t2 - t1;
-            count += p.getCounter();
+
+            // Save time and counter
+            count[i] = p.getCounter();
+            time[i] = t2 - t1;
+            if (time[i] > maxTime) maxTime = time[i];
+            if (time[i] < minTime) minTime = time[i];
         }
-        f.write(count/n + "," + time/n + "\n");
+
+        for (int i = 0; i < runs; i++) { // Remove max and min time (once)
+            if (time[i] == maxTime) {
+                maxTime = -1;
+                count[i] = 0;
+                time[i] = 0;
+            }
+            if (time[i] == minTime) {
+                minTime = -1;
+                count[i] = 0;
+                time[i] = 0;
+            }
+        }
+
+        // Calculate sums
+        int sumCount = 0;
+        long sumTime = 0;
+        for (int i = 0; i < runs; i++) {
+            sumCount += count[i];
+            sumTime += time[i];
+        }
+
+        // Write avg of runs to file
+        f.write(String.valueOf(res).charAt(0) + "," + sumCount/(runs-2) + "," + sumTime/(runs-2) + "\n");
     }
 
     private static void printRes(boolean accept, int counter) {
@@ -79,7 +139,9 @@ public class Main {
 
     private static FileWriter createFileWriter(String fileName) {
         try {
-            return new FileWriter("results/" + fileName);
+            FileWriter file = new FileWriter("results/" + fileName);
+            file.write("res,count,time\n");
+            return file;
         } catch (IOException e) {
             System.out.println("Failed to create file: " + fileName + ".\n\tError: " + e);
             System.exit(1);

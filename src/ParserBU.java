@@ -1,10 +1,8 @@
 import java.util.Arrays;
 
 public class ParserBU implements Parser {
-
     private int counter;
 
-    // Skapa v2 av denna med int arr ist f bool & ksk v3 med HashSet?
     @Override
     public boolean parse(Grammar g, String s) {
         counter = 0;
@@ -26,6 +24,7 @@ public class ParserBU implements Parser {
                 boolean[] newCell = new boolean[g.numNT];
 
                 for (int i = 0; i < y; i++) { // loop over child cells
+                    counter++; // Count number of loops
                     boolean[] under = table[x][i];
                     boolean[] diagonal = table[x+i+1][y-i-1];
 
@@ -34,7 +33,6 @@ public class ParserBU implements Parser {
 
                         for (int d = 0; d < g.numNT; d++) { // loop over non-terminals diagonal
                             if (!diagonal[d]) continue;
-                            counter++; // Count number of loops
 
                             Integer[] nts = g.NTs_to_NT[u][d]; // get non-terminals that produce u and d
                             if (nts == null) continue;
@@ -49,7 +47,9 @@ public class ParserBU implements Parser {
         return table[0][n-1][g.start];
     }
 
-    public boolean parse2(Grammar g, String s) {
+
+    // Skapa v2 av denna med int arr / hashset ist f boolean arr
+    public boolean parse2(Grammar g, String s) { // WIP!!!
         counter = 0;
         int n = s.length();
         Integer[][][] table = new Integer[n][n][];
@@ -71,7 +71,7 @@ public class ParserBU implements Parser {
                     Integer[] under = table[x][i];
                     Integer[] diagonal = table[x+i+1][y-i-1];
                     if (under == null || diagonal == null) continue;
-//                    System.out.println(Arrays.toString(under) + Arrays.toString(diagonal));
+//                    System.out.println(Arrays.toString(under) + Arrays.toString(diagonal)); // DEBUG
                     for (int u: under) { // loop over non-terminals under
                         for (int d: diagonal) { // loop over non-terminals diagonal
                             counter++; // Count number of loops
