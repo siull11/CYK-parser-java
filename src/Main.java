@@ -1,5 +1,7 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import grammar.*;
+import parser.*;
 
 public class Main {
 
@@ -7,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start of program");
         System.out.println("Test settings: \n" +
-                "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "d len: " + args[2]);
+                "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "step len: " + args[2]);
 
         try {
             runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
@@ -134,7 +136,7 @@ public class Main {
         f.write(s.length() + "," +
                 String.valueOf(res).charAt(0) + "," +
                 sumCount/(runs-2) + "," +
-                ((float) sumTime/(runs-2))/1000000000 + "\n");
+                ((double) sumTime/(runs-2))/1000000000 + "\n");
     }
 
     private static void printRes(boolean accept, int counter) {
