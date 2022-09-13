@@ -133,7 +133,10 @@ public class Main {
         }
 
         // Write avg of runs to file
-        f.write(s.length() + "," + String.valueOf(res).charAt(0) + "," + sumCount/(runs-2) + "," + sumTime/(runs-2) + "\n");
+        f.write(s.length() + "," +
+                String.valueOf(res).charAt(0) + "," +
+                sumCount/(runs-2) + "," +
+                ((float) sumTime/(runs-2))/1000000000 + "\n");
     }
 
     private static void printRes(boolean accept, int counter) {

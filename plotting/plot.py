@@ -59,7 +59,7 @@ def getFileData(filepath):
 	dataY = []
 	for line in lines:
 		dataX.append(int(line[0]))
-		dataY.append(int(line[3]))
+		dataY.append(float(line[3]))
 	file.close()
 	return (dataX, dataY)
 
