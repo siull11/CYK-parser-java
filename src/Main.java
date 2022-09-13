@@ -133,7 +133,7 @@ public class Main {
         }
 
         // Write avg of runs to file
-        f.write(String.valueOf(res).charAt(0) + "," + sumCount/(runs-2) + "," + sumTime/(runs-2) + "\n");
+        f.write(s.length() + "," + String.valueOf(res).charAt(0) + "," + sumCount/(runs-2) + "," + sumTime/(runs-2) + "\n");
     }
 
     private static void printRes(boolean accept, int counter) {
@@ -143,7 +143,7 @@ public class Main {
     private static FileWriter createFileWriter(String fileName) {
         try {
             FileWriter file = new FileWriter("results/" + fileName);
-            file.write("res,count,time\n");
+            file.write("len,res,count,time\n");
             return file;
         } catch (IOException e) {
             System.out.println("Failed to create file: " + fileName + ".\n\tError: " + e);
