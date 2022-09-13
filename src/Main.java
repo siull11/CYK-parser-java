@@ -88,8 +88,6 @@ public class Main {
         file.close();
     }
 
-
-
     private static void runtTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
         p.parse(g, s); // Dry run
         boolean res = false;
