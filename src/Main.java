@@ -3,6 +3,7 @@ import java.io.IOException;
 
 public class Main {
 
+    // args[1] needs to be divisible by args[2] and args[1]/args[2] needs to be divisible by 2
     public static void main(String[] args) {
         System.out.println("Start of program");
         System.out.println("Test settings: \n" +
