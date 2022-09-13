@@ -5,9 +5,11 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Start of program");
+        System.out.println("Test settings: \n" +
+                "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "d len: " + args[2]);
 
         try {
-            runTests(10, 500, 100);
+            runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
