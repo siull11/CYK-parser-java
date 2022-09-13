@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.Arrays;
 
 public class ParserBU implements Parser {
@@ -8,6 +7,7 @@ public class ParserBU implements Parser {
     // Skapa v2 av denna med int arr ist f bool & ksk v3 med HashSet?
     @Override
     public boolean parse(Grammar g, String s) {
+        counter = 0;
         int n = s.length();
         boolean[][][] table = new boolean[n][n][g.numNT];
 
@@ -50,6 +50,7 @@ public class ParserBU implements Parser {
     }
 
     public boolean parse2(Grammar g, String s) {
+        counter = 0;
         int n = s.length();
         Integer[][][] table = new Integer[n][n][];
 

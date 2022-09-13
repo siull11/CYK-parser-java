@@ -9,6 +9,7 @@ public class ParserTD implements Parser {
     public boolean parse(Grammar g, String s) {
         this.g = g;
         this.s = s;
+        counter = 0;
         int n = s.length();
         table = new Boolean[n][n][g.numNT];
         return recursive(g.start, 0, n-1);
