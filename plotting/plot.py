@@ -1,9 +1,14 @@
 #!/usr/bin/python
+import sys
 import csv
 import matplotlib.pyplot as plt
 
 def main():
-	prefix = '../results/'
+	if len(sys.argv) == 2:
+		prefix = sys.argv[1] + '/'
+	else:
+		prefix = '../results/'
+
 	buDyckInside = getFileData(prefix + 'bu-dyck-inside.csv')
 	buDyckRepeat = getFileData(prefix + 'bu-dyck-repeat.csv')
 	buDyckRepeatBefore = getFileData(prefix + 'bu-dyck-repeat-before.csv')

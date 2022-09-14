@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start of program");
         System.out.println("Test settings: \n" +
-                "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "step len: " + args[2]);
+                "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "dist len: " + args[2]);
 
         try {
             runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
@@ -26,8 +26,8 @@ public class Main {
 //        Parser p = new ParserTD();
 //        ParserBU p = new ParserBU();
 
-// (()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))
-//        printRes(p.parse(g, "()"), p.getCounter());
+//        printRes(p.parse(g, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))"), p.getCounter());
+//        printRes(p.parse(g, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))"), p.getCounter());
     }
 
     private static void runTests(int runs, int maxLen, int dLen) throws IOException {
