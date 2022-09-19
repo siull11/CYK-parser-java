@@ -34,7 +34,7 @@ public class Main {
 //        }
     }
 
-    private static void runTests(int runs, int maxLen, int dLen) throws IOException {
+    private static void runTests(int runs, int maxLen, int dLen) throws IOException { // Adda mer progress outprints???
         Grammar gd = new GrammarDyck();
         Grammar gs = new GrammarStupid();
         TestStrings ts = new TestStrings(maxLen, dLen);
