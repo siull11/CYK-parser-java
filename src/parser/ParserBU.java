@@ -1,6 +1,5 @@
 package parser;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,8 +9,8 @@ import grammar.Grammar;
 public class ParserBU implements Parser { //FIXA INDEXIN SCHEMA FOR TABLE (ALL PARSE)!!!
     private long counter;
 
-//    @Override
-    public boolean parseold(Grammar g, String s) {
+    @Override
+    public boolean parse(Grammar g, String s) {
         counter = 0;
         int n = s.length();
         boolean[][][] table = new boolean[n][n][g.numNT];
@@ -54,8 +53,8 @@ public class ParserBU implements Parser { //FIXA INDEXIN SCHEMA FOR TABLE (ALL P
         return table[0][n-1][g.start];
     }
 
-    @Override
-    public boolean parse(Grammar g, String s) {
+//    @Override
+    public boolean parseIntArr(Grammar g, String s) {
         counter = 0;
         int n = s.length();
         Integer[][][] table = new Integer[n][n][];
