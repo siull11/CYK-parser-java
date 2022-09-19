@@ -1,9 +1,46 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class TestStrings {
     private final String[] dyckInsideStrings;
     private final String[] dyckRepeatStrings;
     private final String[] dyckRepeatStringsFailBefore;
     private final String[] dyckRepeatStringsFailAfter;
     private final String[] stupidStrings;
+
+/*
+    Command line arguments: [n, d]
+        n is the max length of test strings
+        d is the distance in length between two sequential test strings
+            n needs to be divisible by d and n/d needs to be divisible by 2
+            total amount of test strings will be n/d
+ */
+    public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Usage: java -jar teststrings.jar <max length> <distance>");
+            System.exit(1);
+        }
+        System.out.println("String params: [n: " + args[0] + ", d: " + args[1] + "]");
+        TestStrings ts = new TestStrings(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+        printToFile("dyck-inside.txt", ts.getDyckInsideStrings());
+        printToFile("dyck-repeat.txt", ts.getDyckRepeatStrings());
+        printToFile("dyck-repeat-before.txt", ts.getDyckRepeatStringsFailBefore());
+        printToFile("dyck-repeat-after.txt", ts.getDyckRepeatStringsFailAfter());
+        printToFile("stupid.txt", ts.getStupidStrings());
+    }
+
+    public static void printToFile(String fileName, String[] strings) {
+        try {
+            FileWriter file = new FileWriter("resources/strings/" + fileName);
+            for (String s: strings) {
+                file.write(s + "\n");
+            }
+            file.close();
+        } catch (IOException e) {
+            System.out.println("Failed to create file: " + fileName + ". Error: " + e);
+            System.exit(1);
+        }
+    }
 
     public TestStrings(int maxLen, int dLen) {
         // Create strings "(((..." and ")))...", with len dLen/2

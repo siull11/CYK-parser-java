@@ -29,7 +29,7 @@ public abstract class Grammar { // byta från public attr till getters!!!
             String[] a = rules.toArray(String[]::new);
             parseGrammar(a);
         } catch (Exception e) {
-            System.out.println("Failed to read from file. Error: " + e);
+            System.out.println("Failed to read from file " + fileName + ". Error: " + e);
             System.exit(e.hashCode());
         }
     }
