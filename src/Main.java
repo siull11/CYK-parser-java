@@ -97,7 +97,7 @@ public class Main {
     private static void runTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
         p.parse(g, s); // Dry run
         boolean res = false;
-        long[] count = new long[runs];
+        long count = 0;
         long[] time = new long[runs];
         long maxTime = 0;
         long minTime = Long.MAX_VALUE;
@@ -109,37 +109,21 @@ public class Main {
             long t2 = System.nanoTime();
 
             // Save time and counter
-            count[i] = p.getCounter();
+            count = p.getCounter();
             time[i] = t2 - t1;
             if (time[i] > maxTime) maxTime = time[i];
             if (time[i] < minTime) minTime = time[i];
         }
 
-        for (int i = 0; i < runs; i++) { // Remove max and min time (once)
-            if (time[i] == maxTime) {
-                maxTime = -1;
-                count[i] = 0;
-                time[i] = 0;
-            }
-            if (time[i] == minTime) {
-                minTime = -1;
-                count[i] = 0;
-                time[i] = 0;
-            }
-        }
-
-        // Calculate sums
-        int sumCount = 0;
-        long sumTime = 0;
+        // Calculate sum (without max and min)
+        long sumTime = -maxTime - minTime;
         for (int i = 0; i < runs; i++) {
-            sumCount += count[i];
             sumTime += time[i];
         }
 
         // Print to file or stdout
         String out = s.length() + "," +
-                String.valueOf(res).charAt(0) + "," +
-                sumCount/(runs-2) + "," +
+                String.valueOf(res).charAt(0) + "," + count + "," +
                 ((double) sumTime/(runs-2))/1000000000;
         if (f != null) {
             f.write(out + "\n");
