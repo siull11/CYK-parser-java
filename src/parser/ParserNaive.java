@@ -2,8 +2,9 @@ package parser;
 
 import grammar.Grammar;
 
+// CYK algorithm naive implementation
 public class ParserNaive implements Parser {
-    private int counter;
+    private long counter;
     private Grammar g;
     private String s;
 
@@ -34,7 +35,7 @@ public class ParserNaive implements Parser {
     }
 
     @Override
-    public int getCounter() {
+    public long getCounter() {
         return counter;
     }
 }

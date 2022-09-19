@@ -69,4 +69,4 @@ def getFileData(filepath):
 	return (dataX, dataY)
 
 if __name__ == '__main__':
-    main()
+	main()

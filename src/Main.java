@@ -11,23 +11,27 @@ public class Main {
         System.out.println("Test settings: \n" +
                 "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "dist len: " + args[2]);
 
-        try {
-            runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-//        Grammar g =
-//                new GrammarDyck();
+        Grammar g =
+                new GrammarDyck();
 //                new GrammarStupid();
 //                new GrammarFromFile("dyck.txt");
 
 //        Parser p = new ParserNaive();
 //        Parser p = new ParserTD();
-//        ParserBU p = new ParserBU();
-
-//        printRes(p.parse(g, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))"), p.getCounter());
-//        printRes(p.parse(g, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))"), p.getCounter());
+        ParserBU p = new ParserBU();
+        try {
+//            runTest(g, p, null, "()", 1);
+            runTest(g, p, null, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))", 1);
+//            runTest(g, p, null, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))", 1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void runTests(int runs, int maxLen, int dLen) throws IOException {
@@ -40,65 +44,65 @@ public class Main {
         // TD
         System.out.println("TD Dyck inside");
         FileWriter file = createFileWriter("td-dyck-inside.csv");
-        for (String s: ts.getDyckInsideStrings()) runtTest(gd, td, file, s, runs);
+        for (String s: ts.getDyckInsideStrings()) runTest(gd, td, file, s, runs);
         file.close();
 
         System.out.println("TD Dyck repeat");
         file = createFileWriter("td-dyck-repeat.csv");
-        for (String s: ts.getDyckRepeatStrings()) runtTest(gd, td, file, s, runs);
+        for (String s: ts.getDyckRepeatStrings()) runTest(gd, td, file, s, runs);
         file.close();
 
         System.out.println("TD Dyck repeat fail before");
         file = createFileWriter("td-dyck-repeat-before.csv");
-        for (String s: ts.getDyckRepeatStringsFailBefore()) runtTest(gd, td, file, s, runs);
+        for (String s: ts.getDyckRepeatStringsFailBefore()) runTest(gd, td, file, s, runs);
         file.close();
 
         System.out.println("TD Dyck repeat fail after");
         file = createFileWriter("td-dyck-repeat-after.csv");
-        for (String s: ts.getDyckRepeatStringsFailAfter()) runtTest(gd, td, file, s, runs);
+        for (String s: ts.getDyckRepeatStringsFailAfter()) runTest(gd, td, file, s, runs);
         file.close();
 
         System.out.println("TD stupid");
         file = createFileWriter("td-stupid.csv");
-        for (String s: ts.getStupidStrings()) runtTest(gs, td, file, s, runs);
+        for (String s: ts.getStupidStrings()) runTest(gs, td, file, s, runs);
         file.close();
 
         // BU
         System.out.println("BU Dyck inside");
         file = createFileWriter("bu-dyck-inside.csv");
-        for (String s: ts.getDyckInsideStrings()) runtTest(gd, bu, file, s, runs);
+        for (String s: ts.getDyckInsideStrings()) runTest(gd, bu, file, s, runs);
         file.close();
 
         System.out.println("BU Dyck repeat");
         file = createFileWriter("bu-dyck-repeat.csv");
-        for (String s: ts.getDyckRepeatStrings()) runtTest(gd, bu, file, s, runs);
+        for (String s: ts.getDyckRepeatStrings()) runTest(gd, bu, file, s, runs);
         file.close();
 
         System.out.println("BU Dyck repeat fail before");
         file = createFileWriter("bu-dyck-repeat-before.csv");
-        for (String s: ts.getDyckRepeatStringsFailBefore()) runtTest(gd, bu, file, s, runs);
+        for (String s: ts.getDyckRepeatStringsFailBefore()) runTest(gd, bu, file, s, runs);
         file.close();
 
         System.out.println("BU Dyck repeat fail after");
         file = createFileWriter("bu-dyck-repeat-after.csv");
-        for (String s: ts.getDyckRepeatStringsFailAfter()) runtTest(gd, bu, file, s, runs);
+        for (String s: ts.getDyckRepeatStringsFailAfter()) runTest(gd, bu, file, s, runs);
         file.close();
 
         System.out.println("BU stupid");
         file = createFileWriter("bu-stupid.csv");
-        for (String s: ts.getStupidStrings()) runtTest(gs, bu, file, s, runs);
+        for (String s: ts.getStupidStrings()) runTest(gs, bu, file, s, runs);
         file.close();
     }
 
-    private static void runtTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
+    private static void runTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
         p.parse(g, s); // Dry run
         boolean res = false;
-        int[] count = new int[runs];
+        long[] count = new long[runs];
         long[] time = new long[runs];
         long maxTime = 0;
         long minTime = Long.MAX_VALUE;
 
-        for (int i = 0; i < runs; i++) { // Do runs test runs
+        for (int i = 0; i < runs; i++) { // Do test runs
             // Do run, measure time
             long t1 = System.nanoTime();
             res = p.parse(g, s);
@@ -132,11 +136,16 @@ public class Main {
             sumTime += time[i];
         }
 
-        // Write avg of runs to file
-        f.write(s.length() + "," +
+        // Print to file or stdout
+        String out = s.length() + "," +
                 String.valueOf(res).charAt(0) + "," +
                 sumCount/(runs-2) + "," +
-                ((double) sumTime/(runs-2))/1000000000 + "\n");
+                ((double) sumTime/(runs-2))/1000000000;
+        if (f != null) {
+            f.write(out + "\n");
+        } else {
+            System.out.println(out);
+        }
     }
 
     private static void printRes(boolean accept, int counter) {

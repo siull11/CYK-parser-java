@@ -2,8 +2,9 @@ package parser;
 
 import grammar.Grammar;
 
+// CYK algorithm top-down implementation
 public class ParserTD implements Parser {
-    private int counter;
+    private long counter;
     private Grammar g;
     private String s;
     private Boolean[][][] table;
@@ -45,7 +46,7 @@ public class ParserTD implements Parser {
     }
 
     @Override
-    public int getCounter() {
+    public long getCounter() {
         return counter;
     }
 }

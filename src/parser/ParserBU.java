@@ -1,13 +1,17 @@
 package parser;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import grammar.Grammar;
 
-public class ParserBU implements Parser {
-    private int counter;
+// CYK algorithm bottom-up implementation
+public class ParserBU implements Parser { //FIXA INDEXIN SCHEMA FOR TABLE (ALL PARSE)!!!
+    private long counter;
 
-    @Override
-    public boolean parse(Grammar g, String s) {
+//    @Override
+    public boolean parseold(Grammar g, String s) {
         counter = 0;
         int n = s.length();
         boolean[][][] table = new boolean[n][n][g.numNT];
@@ -50,9 +54,8 @@ public class ParserBU implements Parser {
         return table[0][n-1][g.start];
     }
 
-
-    // Skapa v2 av denna med int arr / hashset ist f boolean arr
-    public boolean parse2(Grammar g, String s) { // WIP!!!
+    @Override
+    public boolean parse(Grammar g, String s) {
         counter = 0;
         int n = s.length();
         Integer[][][] table = new Integer[n][n][];
@@ -61,39 +64,33 @@ public class ParserBU implements Parser {
         for (int i = 0; i < n; i++) {
             char t = s.charAt(i);
             if (!g.T_to_NTs.containsKey(t)) return false;
-            for (int nt: g.T_to_NTs.get(t)) {
-                if (table[i][0] == null) table[i][0] = new Integer[]{nt};
-                else table[i][0] = Arrays.copyOf(table[i][0], table[i][0].length+1);
-            }
+            table[i][0] = g.T_to_NTs.get(t);
         }
         // Fill rest of the table
         for (int y = 1; y < n; y++) { // loop over rows
             for (int x = 0; x < n-y; x++) { // loop over columns
-                Integer[] newCell = new Integer[0];
+                HashSet<Integer> newCell = new HashSet<>();
+
                 for (int i = 0; i < y; i++) { // loop over child cells
+                    counter++; // Count number of loops
                     Integer[] under = table[x][i];
                     Integer[] diagonal = table[x+i+1][y-i-1];
+
                     if (under == null || diagonal == null) continue;
-//                    System.out.println(Arrays.toString(under) + Arrays.toString(diagonal)); // DEBUG
+
                     for (int u: under) { // loop over non-terminals under
                         for (int d: diagonal) { // loop over non-terminals diagonal
-                            counter++; // Count number of loops
+
                             Integer[] nts = g.NTs_to_NT[u][d];
                             if (nts != null) {
-                                newCell = new Integer[newCell.length+nts.length];
-                                System.arraycopy(nts, 0, newCell, 0, newCell.length+nts.length);
+                                newCell.addAll(List.of(nts));
                             }
                         }
                     }
                 }
-                if (newCell.length != 0) table[x][y] = newCell;
+                if (!newCell.isEmpty()) table[x][y] = table[x][y] = newCell.toArray(new Integer[0]);
             }
         }
-
-        for (Integer[][] row: table) {
-            System.out.println(Arrays.deepToString(row)); // DEBUG
-        }
-
 
         if (table[0][n-1] == null) return false;
         for (int nt: table[0][n-1]) {
@@ -103,7 +100,7 @@ public class ParserBU implements Parser {
     }
 
     @Override
-    public int getCounter() {
+    public long getCounter() {
         return counter;
     }
 }
