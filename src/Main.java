@@ -11,27 +11,27 @@ public class Main {
         System.out.println("Test settings: \n" +
                 "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "dist len: " + args[2]);
 
-//        try {
-//            runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            runTests(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        Grammar g =
-                new GrammarDyck();
+//        Grammar g =
+//                new GrammarDyck();
 //                new GrammarStupid();
 //                new GrammarFromFile("dyck.txt");
 
 //        Parser p = new ParserNaive();
 //        Parser p = new ParserTD();
-        ParserBU p = new ParserBU();
-        try {
-//            runTest(g, p, null, "()", 1);
-            runTest(g, p, null, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))", 1);
-//            runTest(g, p, null, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))", 1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        ParserBU p = new ParserBU();
+//        try {
+////            runTest(g, p, null, "()", 1);
+//            runTest(g, p, null, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))", 1);
+////            runTest(g, p, null, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))", 1);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     private static void runTests(int runs, int maxLen, int dLen) throws IOException {
