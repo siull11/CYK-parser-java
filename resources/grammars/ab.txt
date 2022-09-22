@@ -1,5 +1,7 @@
+S SS
+S BA
 S AB
-S AX
-X SB
-A a
+B SB
+B BS
 B b
+A a
