@@ -5,8 +5,9 @@ import java.util.List;
 
 import grammar.Grammar;
 
+//FIXA INDEXIN SCHEMA FOR TABLE (ALL PARSE)???
 // CYK algorithm bottom-up implementation
-public class ParserBU implements Parser { //FIXA INDEXIN SCHEMA FOR TABLE (ALL PARSE)!!!
+public class ParserBU implements Parser { // Splitta upp till ParserBUBool, ParserBUInt, ParserBUSet!!!
     private long counter;
 
     @Override
