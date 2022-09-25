@@ -15,8 +15,8 @@ public class ParserTD implements Parser {
         this.s = s;
         counter = 0;
         int n = s.length();
-        table = new Boolean[n][n][g.numNT];
-        return recursive(g.start, 0, n-1);
+        table = new Boolean[n][n][g.getNumNT()];
+        return recursive(g.getStart(), 0, n-1);
     }
 
     private boolean recursive(int nt, int i, int j) {
@@ -30,7 +30,7 @@ public class ParserTD implements Parser {
         }
 
         // Not at bottom of tree, see which non-terminals can be produced
-        int[][] nts = g.NT_to_NTs[nt];
+        int[][] nts = g.getNT_to_NTs()[nt];
         if (nts != null) {
             for (int[] ntPair: nts) {
                 for (int k = i; k < j; k++) {

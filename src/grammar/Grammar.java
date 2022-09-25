@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class Grammar { // byta från public attr till getters!!!
-    public int start;
-    public int numNT;
-    public HashMap<Character, Integer> ids;
-    public int[][][] NT_to_NTs;
-    public Integer[][][] NTs_to_NT; //GÖRA TILL HASHSET???
-    public char[][] NT_to_Ts;
-    public HashMap<Character, Integer[]> T_to_NTs;
+public abstract class Grammar {
+    private int start;
+    private int numNT;
+    private HashMap<Character, Integer> ids;
+    private int[][][] NT_to_NTs;
+    private Integer[][][] NTs_to_NT; //GÖRA TILL HASHSET???
+    private char[][] NT_to_Ts;
+    private HashMap<Character, Integer[]> T_to_NTs;
 
     public Grammar(String[] rules) {
         parseGrammar(rules);
@@ -133,5 +133,33 @@ public abstract class Grammar { // byta från public attr till getters!!!
         if (!ids.containsKey(nt)) {
             ids.put(nt, ids.size());
         }
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public int getNumNT() {
+        return numNT;
+    }
+
+    public HashMap<Character, Integer> getIds() {
+        return ids;
+    }
+
+    public int[][][] getNT_to_NTs() {
+        return NT_to_NTs;
+    }
+
+    public Integer[][][] getNTs_to_NT() {
+        return NTs_to_NT;
+    }
+
+    public char[][] getNT_to_Ts() {
+        return NT_to_Ts;
+    }
+
+    public HashMap<Character, Integer[]> getT_to_NTs() {
+        return T_to_NTs;
     }
 }

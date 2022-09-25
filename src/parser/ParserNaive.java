@@ -13,7 +13,7 @@ public class ParserNaive implements Parser {
         this.g = g;
         this.s = s;
         counter = 0;
-        return recursive(g.start, 0, s.length()-1);
+        return recursive(g.getStart(), 0, s.length()-1);
     }
 
     private boolean recursive(int nt, int i, int j) {
@@ -23,7 +23,7 @@ public class ParserNaive implements Parser {
         }
 
         // Not at bottom of tree, see which non-terminals can be produced
-        int[][] nts = g.NT_to_NTs[nt];
+        int[][] nts = g.getNT_to_NTs()[nt];
         if (nts != null) {
             for (int[] ntPair: nts) {
                 for (int k = i; k < j; k++) {

@@ -1,26 +1,30 @@
 package parser;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import grammar.Grammar;
 
-//FIXA INDEXIN SCHEMA FOR TABLE (ALL PARSE)???
 // CYK algorithm bottom-up implementation
-public class ParserBU implements Parser { // Splitta upp till ParserBUBool, ParserBUInt, ParserBUSet!!!
+public class ParserBU implements Parser {
     private long counter;
-
+    // KOLLA SPEC FÖR BREAK EARLIER !!!
     @Override
     public boolean parse(Grammar g, String s) {
+//        return parseIntArr(g, s); // Splitta upp till ParserBUBool, ParserBUInt, ParserBUSet!!!
         counter = 0;
         int n = s.length();
-        boolean[][][] table = new boolean[n][n][g.numNT];
+        int numNT = g.getNumNT();
+        HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();
+        Integer[][][] NTs_to_NT = g.getNTs_to_NT();
+        boolean[][][] table = new boolean[n][n][numNT];
 
         // Convert terminals to non-terminals (fill bottom row)
         for (int i = 0; i < n; i++) {
             char t = s.charAt(i);
-            if (!g.T_to_NTs.containsKey(t)) return false;
-            for (int nt: g.T_to_NTs.get(t)) {
+            if (!T_to_NTs.containsKey(t)) return false;
+            for (int nt: T_to_NTs.get(t)) {
                 table[i][0][nt] = true;
             }
         }
@@ -28,20 +32,20 @@ public class ParserBU implements Parser { // Splitta upp till ParserBUBool, Pars
         // Fill rest of the table
         for (int y = 1; y < n; y++) { // loop over rows
             for (int x = 0; x < n-y; x++) { // loop over columns
-                boolean[] newCell = new boolean[g.numNT];
+                boolean[] newCell = new boolean[numNT];
 
                 for (int i = 0; i < y; i++) { // loop over child cells
                     counter++; // Count number of loops
                     boolean[] under = table[x][i];
                     boolean[] diagonal = table[x+i+1][y-i-1];
 
-                    for (int u = 0; u < g.numNT; u++) { // loop over non-terminals under
+                    for (int u = 0; u < numNT; u++) { // loop over non-terminals under
                         if (!under[u]) continue;
 
-                        for (int d = 0; d < g.numNT; d++) { // loop over non-terminals diagonal
+                        for (int d = 0; d < numNT; d++) { // loop over non-terminals diagonal
                             if (!diagonal[d]) continue;
 
-                            Integer[] nts = g.NTs_to_NT[u][d]; // get non-terminals that produce u and d
+                            Integer[] nts = NTs_to_NT[u][d]; // get non-terminals that produce u and d
                             if (nts == null) continue;
 
                             for (int nt: nts) newCell[nt] = true;
@@ -51,20 +55,21 @@ public class ParserBU implements Parser { // Splitta upp till ParserBUBool, Pars
                 table[x][y] = newCell;
             }
         }
-        return table[0][n-1][g.start];
+        return table[0][n-1][g.getStart()];
     }
 
-//    @Override
     public boolean parseIntArr(Grammar g, String s) {
         counter = 0;
         int n = s.length();
+        HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();
+        Integer[][][] NTs_to_NT = g.getNTs_to_NT();
         Integer[][][] table = new Integer[n][n][];
 
         // Convert terminals to non-terminals (fill bottom row)
         for (int i = 0; i < n; i++) {
             char t = s.charAt(i);
-            if (!g.T_to_NTs.containsKey(t)) return false;
-            table[i][0] = g.T_to_NTs.get(t);
+            if (!T_to_NTs.containsKey(t)) return false;
+            table[i][0] = T_to_NTs.get(t);
         }
         // Fill rest of the table
         for (int y = 1; y < n; y++) { // loop over rows
@@ -81,7 +86,7 @@ public class ParserBU implements Parser { // Splitta upp till ParserBUBool, Pars
                     for (int u: under) { // loop over non-terminals under
                         for (int d: diagonal) { // loop over non-terminals diagonal
 
-                            Integer[] nts = g.NTs_to_NT[u][d];
+                            Integer[] nts = NTs_to_NT[u][d];
                             if (nts != null) {
                                 newCell.addAll(List.of(nts));
                             }
@@ -94,7 +99,7 @@ public class ParserBU implements Parser { // Splitta upp till ParserBUBool, Pars
 
         if (table[0][n-1] == null) return false;
         for (int nt: table[0][n-1]) {
-            if (nt == g.start) return true;
+            if (nt == g.getStart()) return true;
         }
         return false;
     }
