@@ -1,10 +1,10 @@
 package parser;
 
+import grammar.Grammar;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
-import grammar.Grammar;
 
 // CYK algorithm bottom-up implementation
 public class ParserBU implements Parser {

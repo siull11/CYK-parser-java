@@ -1,3 +1,5 @@
+package run;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,7 +11,7 @@ public class TestStrings {
     private final String[] stupidStrings;
 
 /*
-    Command line arguments: [n, d]
+    Command line arguments (args): [n, d]
         n is the max length of test strings
         d is the distance in length between two sequential test strings
             n needs to be divisible by d and n/d needs to be divisible by 2

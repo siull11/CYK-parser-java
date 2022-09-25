@@ -1,14 +1,22 @@
+package run;
+
 import grammar.*;
 import parser.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Main { //FIXA PACKAGE för main methods!!!
+public class RunTests {
+/*
+    Command line arguments (args): [g, m, s, r] FIXA DENNA!!!
+        g is the grammar file name
+        m is the parser method (t for top-down, b for bottom-up, n for naive)
+        s is the file name for the strings to parse
+        r is the amount of runs to do and average over
+ */
+    // args[1] needs to be divisible by args[2] and args[1]/args[2] needs to be divisible by 2 (ACTUALL)
+    public static void main(String[] args) { // CLEANA UPP HÄR"!!!!
 
-    // args[1] needs to be divisible by args[2] and args[1]/args[2] needs to be divisible by 2
-    public static void main(String[] args) {
-        System.out.println("Start of program");
         System.out.println("Test settings: \n" +
                 "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "dist len: " + args[2]);
 
@@ -17,25 +25,9 @@ public class Main { //FIXA PACKAGE för main methods!!!
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-//        Grammar g =
-//                new GrammarDyck();
-//                new GrammarStupid();
-//                new GrammarFromFile("dyck.txt");
-
-//        Parser p = new ParserNaive();
-//        Parser p = new ParserTD();
-//        ParserBU p = new ParserBU();
-//        try {
-////            runTest(g, p, null, "()", 1);
-//            runTest(g, p, null, "(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))(()()()(()))", 1);
-////            runTest(g, p, null, "(((((((((((((((((((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))", 1);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
-    private static void runTests(int runs, int maxLen, int dLen) throws IOException { // Adda mer progress outprints???
+    private static void runTests(int runs, int maxLen, int dLen) throws IOException {
         Grammar gd = new GrammarDyck();
         Grammar gs = new GrammarStupid();
         TestStrings ts = new TestStrings(maxLen, dLen);
@@ -93,10 +85,6 @@ public class Main { //FIXA PACKAGE för main methods!!!
         file = createFileWriter("bu-stupid.csv");
         for (String s: ts.getStupidStrings()) RunTest.runTest(gs, bu, file, s, runs);
         file.close();
-    }
-
-    private static void printRes(boolean accept, int counter) {
-        System.out.println("Accept: " + accept + ", counter: " + counter);
     }
 
     private static FileWriter createFileWriter(String fileName) {

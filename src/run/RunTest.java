@@ -1,3 +1,5 @@
+package run;
+
 import grammar.Grammar;
 import grammar.GrammarFromFile;
 import parser.Parser;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 
 public class RunTest {
 /*
-    Command line arguments: [g, m, s, r]
+    Command line arguments (args): [g, m, s, r]
         g is the grammar file name
         m is the parser method (t for top-down, b for bottom-up, n for naive)
         s is the file name for the strings to parse
@@ -23,21 +25,7 @@ public class RunTest {
         System.out.println("Test params: [g: " + args[0] + ", m: " + args[1] + ", s: " + args[2] + ", r: " + args[3] + "]");
 
         Grammar g = new GrammarFromFile(args[0]);
-        Parser p = null;
-        switch (args[1]) {
-            case "t":
-                p = new parser.ParserTD();
-                break;
-            case "b":
-                p = new parser.ParserBU();
-                break;
-            case "n":
-                p = new parser.ParserNaive();
-                break;
-            default:
-                System.out.println("Unknown parser method: " + args[1]);
-                System.exit(1);
-        }
+        Parser p = Parse.createParser(args[1]);
 
         try {
             File file = new File("resources/strings/" + args[2]);
@@ -88,8 +76,7 @@ public class RunTest {
                 ((double) sumTime/(runs-2))/1000000000;
         if (f != null) {
             f.write(out + "\n");
-        } else {
-            System.out.println(out);
         }
+        System.out.println(out);
     }
 }
