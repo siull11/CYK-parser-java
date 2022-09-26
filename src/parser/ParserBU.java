@@ -10,9 +10,7 @@ import java.util.List;
 public class ParserBU implements Parser {
     private long counter;
 
-    @Override
-    public boolean parse(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER !!!
-//        return parseIntArr(g, s); // Splitta upp till ParserBUBool, ParserBUInt!!!
+    public boolean parseBoolArr(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER !!!
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();
@@ -58,7 +56,9 @@ public class ParserBU implements Parser {
         return table[0][n-1][g.getStart()];
     }
 
-    public boolean parseIntArr(Grammar g, String s) {
+    @Override
+    public boolean parse(Grammar g, String s) {
+        // return parseBoolArr(g, s); // Splitta upp till ParserBUBool, ParserBUInt!!!
         counter = 0;
         int n = s.length();
         HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();
