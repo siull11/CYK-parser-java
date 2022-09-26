@@ -1,4 +1,5 @@
 out/*
 .idea/*
 results/*
+src/META-INF/MANIFEST.MF
 CYK-parser-java.jar
