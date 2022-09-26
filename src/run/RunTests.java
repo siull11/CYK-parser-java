@@ -14,6 +14,7 @@ public class RunTests {
         s is the file name for the strings to parse
         r is the amount of runs to do and average over
  */
+    // runs min is 3 ÄNDRA???!!!
     // args[1] needs to be divisible by args[2] and args[1]/args[2] needs to be divisible by 2 (ACTUALL)
     public static void main(String[] args) { // CLEANA UPP HÄR"!!!!
 

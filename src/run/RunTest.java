@@ -15,7 +15,7 @@ public class RunTest {
         g is the grammar file name
         m is the parser method (t for top-down, b for bottom-up, n for naive)
         s is the file name for the strings to parse
-        r is the amount of runs to do and average over
+        r is the amount of runs to do and average over (3 is min!!! ändra???)
  */
     public static void main(String[] args) {
         if (args.length != 4) {
