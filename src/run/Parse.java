@@ -13,7 +13,7 @@ public class Parse {
  */
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.out.println("Usage: java -XX:CompileThreshold=1 -jar runparse.jar <grammar file> <parser method> <string>");
+            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string>");
             System.exit(1);
         }
         Grammar g = new GrammarFromFile(args[0]);

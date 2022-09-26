@@ -87,6 +87,10 @@ public class RunTests {
         file.close();
     }
 
+    private static void runSmallTests(int runs, int maxLen, int dLen) throws IOException  {
+
+    }
+
     private static FileWriter createFileWriter(String fileName) {
         try {
             FileWriter file = new FileWriter("results/" + fileName);

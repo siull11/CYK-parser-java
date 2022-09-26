@@ -19,7 +19,7 @@ public class RunTest {
  */
     public static void main(String[] args) {
         if (args.length != 4) {
-            System.out.println("Usage: java -XX:CompileThreshold=1 -jar runtest.jar <grammar file> <parser method> <string file> <runs>");
+            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string file> <runs>");
             System.exit(1);
         }
         System.out.println("Test params: [g: " + args[0] + ", m: " + args[1] + ", s: " + args[2] + ", r: " + args[3] + "]");

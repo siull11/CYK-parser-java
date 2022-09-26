@@ -10,7 +10,7 @@ public abstract class Grammar {
     private int numNT;
     private HashMap<Character, Integer> ids;
     private int[][][] NT_to_NTs;
-    private Integer[][][] NTs_to_NT; //GÖRA TILL HASHSET???
+    private Integer[][][] NTs_to_NT;
     private char[][] NT_to_Ts;
     private HashMap<Character, Integer[]> T_to_NTs;
 

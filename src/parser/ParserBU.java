@@ -9,10 +9,10 @@ import java.util.List;
 // CYK algorithm bottom-up implementation
 public class ParserBU implements Parser {
     private long counter;
-    // KOLLA SPEC FÖR BREAK EARLIER !!!
+
     @Override
-    public boolean parse(Grammar g, String s) {
-//        return parseIntArr(g, s); // Splitta upp till ParserBUBool, ParserBUInt, ParserBUSet!!!
+    public boolean parse(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER !!!
+//        return parseIntArr(g, s); // Splitta upp till ParserBUBool, ParserBUInt!!!
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();

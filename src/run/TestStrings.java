@@ -19,7 +19,7 @@ public class TestStrings {
  */
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.println("Usage: java -jar teststrings.jar <max length> <distance>");
+            System.out.println("Usage: java -jar fileName.jar <max length> <distance>");
             System.exit(1);
         }
         System.out.println("String params: [n: " + args[0] + ", d: " + args[1] + "]");
