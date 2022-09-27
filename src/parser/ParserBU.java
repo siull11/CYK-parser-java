@@ -10,7 +10,7 @@ import java.util.List;
 public class ParserBU implements Parser {
     private long counter;
 
-    public boolean parseBoolArr(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER (skapa en verision som loopar över alla regler)!!!
+    public boolean parseBoolArr(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER (skapa en verision som loopar över alla regler?)!!!
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();
@@ -93,7 +93,7 @@ public class ParserBU implements Parser {
                         }
                     }
                 }
-                if (!newCell.isEmpty()) table[x][y] = table[x][y] = newCell.toArray(new Integer[0]);
+                if (!newCell.isEmpty()) table[x][y] = newCell.toArray(new Integer[0]);
             }
         }
 
