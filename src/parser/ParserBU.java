@@ -10,7 +10,7 @@ import java.util.List;
 public class ParserBU implements Parser {
     private long counter;
 
-    public boolean parseBoolArr(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER !!!
+    public boolean parseBoolArr(Grammar g, String s) { // Denna ineffektiv KOLLA SPEC FÖR BREAK EARLIER (skapa en verision som loopar över alla regler)!!!
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();
