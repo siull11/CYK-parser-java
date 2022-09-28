@@ -1,4 +1,6 @@
 #!/bin/bash
+# FIXA BÄTTRE SCRIPT!!!
+
 #echo "TD inside"
 #java -XX:CompileThreshold=1 -jar CYK-parser-java.jar dyck.txt t small-dyck-inside.txt 10 > results/td-small-dyck-inside.csv
 #echo "TD repeat"
