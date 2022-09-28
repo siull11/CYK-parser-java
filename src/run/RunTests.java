@@ -16,7 +16,7 @@ public class RunTests {
  */
     // runs min is 3 ÄNDRA???!!!
     // args[1] needs to be divisible by args[2] and args[1]/args[2] needs to be divisible by 2 (ACTUALL)
-    public static void main(String[] args) { // CLEANA UPP HÄR"!!!!
+    public static void main(String[] args) {  //Städa upp o ändra/radera denna!!!
 
         System.out.println("Test settings: \n" +
                 "runs: " + args[0] + ", " + "max len: " + args[1] + ", " + "dist len: " + args[2]);
