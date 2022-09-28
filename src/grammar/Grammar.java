@@ -143,20 +143,12 @@ public abstract class Grammar {
         return numNT;
     }
 
-    public HashMap<Character, Integer> getIds() {
-        return ids;
-    }
-
     public int[][][] getNT_to_NTs() {
         return NT_to_NTs;
     }
 
     public Integer[][][] getNTs_to_NT() {
         return NTs_to_NT;
-    }
-
-    public char[][] getNT_to_Ts() {
-        return NT_to_Ts;
     }
 
     public HashMap<Character, Integer[]> getT_to_NTs() {
