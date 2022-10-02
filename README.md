@@ -1,23 +1,38 @@
 # CYK-parser-java
 This is a parser for context-free grammars on CNF.
 
- FIXA create jar COMMANDS + compile and execute commands + run jar commands för alla mains!!!
- FIXA oxå exempel mm från rapport 1!!!
-### Command to run jar file:
-`java -XX:CompileThreshold=1 -jar CYK-parser-java.jar r n d` <br>
-Where r is the number of runs, n is the max length of strings, d is the distance between sequential strings.
-The program demands a folder named **'results'** in the current directory.
+### Command to compile & run:
+!!!
+
+### Command for jar file:
+!!! (inkl create jar, run jar)
+
 
 ### Command to run tests:
 `./runAllTests.sh` <br>
-Runs a series of tests
-`./runTest.sh <testFile> <grammar> 10` <br>
-Runs the test testFile (in the tests folder) with the grammar dyck.txt and the length of the strings 10.
+Runs a series of tests. <br>
+
+`./runTest.sh <testFile> <runs>` <br>
+Runs the tests in testFile (in the tests folder) with amount of runs to average over. <br>
+**Ex:** `./runTest.sh tests/tests.txt 10` <br>
+
+
+### Format for row in test file:
+`<method> <grammarFile> <inputFile> <outputFile>` <br>
+**Ex:** `n dyck.txt dyck-repeat.txt na-dyck-repeat.csv` <br>
+
 
 ### Command to run plotting script: (UPDATERA DENNA!!!)
-`python3 plot.py <path>` <br>
-Where path is the path to the folder containing the .csv data files.
-Path is optional and if not set the path will be: **'../results'**.
+`python3 plot.py` <br>
+**Flags:**
+- `-h` or `--help` for help <br>
+- `-t` or `--title` to set title, required <br>
+- `-f` or `--files` to set list of names of files to plot, required <br>
+- `-l` or `--labels` to set list of labels for plots, required <br>
+- `-p` or `--path` to set path to files to plot <br>
+- `-d` or `--degree` to set degree of x to divide y with for plots, default=0 <br>
+- `-x` or `--xlabel` to set xlabel for figure, default='length' <br>
+- `-y` or `--ylabel` to set ylabel for figure, default='time [s]' <br>
 
 #### Done plot commands (not user instructions, just placeholder):
 Plot Dyck bu:
