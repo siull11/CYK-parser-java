@@ -1,2 +1,0 @@
-t stupid.txt td-stupid.csv
-b stupid.txt bu-stupid.csv
