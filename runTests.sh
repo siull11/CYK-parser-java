@@ -1,5 +1,17 @@
 #!/bin/bash
-# FIXA BÄTTRE SCRIPT!!!
+declare -r pathToJar=./out/artifacts/CYK_parser_java_jar/CYK-parser-java.jar
+
+declare -r file=$1
+declare -r g=$2 # dyck.txt
+declare -r r=$3 # 10
+
+echo "Testing: $file, with grammar: $g, runs: $r"
+
+while read line; do
+  echo "$line"
+  echo "$pathToJar $g $r $line"
+  java -XX:CompileThreshold=1 -jar "$pathToJar $g $r $line"
+done <"$file"
 
 #echo "TD inside"
 #java -XX:CompileThreshold=1 -jar CYK-parser-java.jar dyck.txt t small-dyck-inside.txt 10 > results/td-small-dyck-inside.csv
@@ -34,5 +46,7 @@
 #echo "Na stupid"
 #java -XX:CompileThreshold=1 -jar CYK-parser-java.jar dyck.txt n small-stupid.txt 10 > results/na-small-stupid.csv
 
-echo "Na repeat"
-java -XX:CompileThreshold=1 -jar CYK-parser-java.jar dyck.txt n dyck-repeat.txt 10 > results/na-dyck-repeat.csv
+
+
+#echo "Na repeat"
+#java -XX:CompileThreshold=1 -jar CYK-parser-java.jar dyck.txt n dyck-repeat.txt 10 > results/na-dyck-repeat.csv

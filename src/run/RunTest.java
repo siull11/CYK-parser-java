@@ -13,26 +13,26 @@ public class RunTest {
 /*
     Command line arguments (args): [g, m, s, r]
         g is the grammar file name
+        r is the amount of runs to do and average over (3 is min!!! ändra???)
         m is the parser method (t for top-down, b for bottom-up, n for naive)
         s is the file name for the strings to parse
-        r is the amount of runs to do and average over (3 is min!!! ändra???)
  */
     public static void main(String[] args) {
         if (args.length != 4) {
-            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string file> <runs>");
+            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <runs> <parser method> <string file>");
             System.exit(1);
         }
-        System.out.println("Test params: [g: " + args[0] + ", m: " + args[1] + ", s: " + args[2] + ", r: " + args[3] + "]");
+        System.out.println("Test params: [g: " + args[0] + ", r: " + args[1] + ", m: " + args[2] + ", s: " + args[3] + "]");
 
         Grammar g = new GrammarFromFile(args[0]);
-        Parser p = Parse.createParser(args[1]);
+        Parser p = Parse.createParser(args[2]);
 
         try {
-            File file = new File("resources/strings/" + args[2]);
+            File file = new File("resources/strings/" + args[3]);
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 try {
-                    runTest(g, p, null, sc.nextLine(), Integer.parseInt(args[3]));
+                    runTest(g, p, null, sc.nextLine(), Integer.parseInt(args[1]));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
