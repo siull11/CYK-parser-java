@@ -1,0 +1,9 @@
+t dyck-inside.txt td-dyck-inside.csv
+t dyck-repeat.txt td-dyck-repeat.csv
+t dyck-repeat-after.txt td-dyck-repeat-after.csv
+t dyck-repeat-before.txt td-dyck-repeat-before.csv
+b dyck-inside.txt bu-dyck-inside.csv
+b dyck-repeat.txt bu-dyck-repeat.csv
+b dyck-repeat-after.txt bu-dyck-repeat-after.csv
+b dyck-repeat-before.txt bu-dyck-repeat-before.csv
+n dyck-repeat.txt na-dyck-repeat.csv

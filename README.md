@@ -3,7 +3,8 @@ This is a parser for context-free grammars on CNF.
  FIXA create jar COMMANDS + compile and execute commands + run jar commands för alla mains!!!
  FIXA oxå exempel mm från rapport 1!!!
 ### Command to run jar file:
-`./runTests.sh singleTest.txt dyck.txt 10` <br>
+`./runAllTests.sh` <br>
+`./runTest.sh singleTest.txt dyck.txt 10` <br>
 `java -XX:CompileThreshold=1 -jar CYK-parser-java.jar r n d` <br>
 Where r is the number of runs, n is the max length of strings, d is the distance between sequential strings.
 The program demands a folder named **'results'** in the current directory.

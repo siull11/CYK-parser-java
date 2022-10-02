@@ -1,1 +1,0 @@
-n dyck-repeat.txt > results/na-dyck-repeat.csv
