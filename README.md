@@ -20,6 +20,7 @@ Runs the tests in testFile (in the tests folder) with amount of runs to average 
 ### Format for row in test file:
 `<method> <grammarFile> <inputFile> <outputFile>` <br>
 **Ex:** `n dyck.txt dyck-repeat.txt na-dyck-repeat.csv` <br>
+**NOTE:** The test file needs to have an empty row in the end.
 
 
 ### Command to run plotting script: (UPDATERA DENNA!!!)
