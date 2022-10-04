@@ -4,7 +4,7 @@ This is a parser for context-free grammars on CNF.
 ### Command to compile & run:
 !!!
 
-### Command for jar file:
+### Command for jar file (/files???):
 !!! (inkl create jar, run jar)
 
 
