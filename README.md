@@ -3,10 +3,17 @@ This is a parser for context-free grammars on CNF.
 
 ### Command to compile & run:
 !!!
+Parse, RuntTest, TestStrings
 
 ### Command for jar file (/files???):
 !!! (inkl create jar, run jar)
 
+
+### Format for grammar file:
+!!!!
+
+### Format for input string file:
+!!!!
 
 ### Command to run tests:
 `./runAllTests.sh` <br>
@@ -57,19 +64,19 @@ Solution:
 `python CYK-parser-java/plot.py -t "Empty language" -f bu-stupid.csv td-stupid.csv -l bottom-up top-down -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
 
 Plot Dyck small inside:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-dyck-inside.csv td-dyck-inside.csv na-dyck-inside.csv -l bottom-up top-down naive -p "results small"` <br>
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-small-dyck-inside.csv td-small-dyck-inside.csv na-small-dyck-inside.csv -l bottom-up top-down naive -p results` <br>
 
 Plot Dyck small repeat:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()" -f bu-dyck-repeat.csv td-dyck-repeat.csv na-dyck-repeat.csv -l bottom-up top-down naive -p "results small"` <br>
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()" -f bu-small-dyck-repeat.csv td-small-dyck-repeat.csv na-small-dyck-repeat.csv -l bottom-up top-down naive -p results` <br>
 
 Plot Dyck small repeat after:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()(" -f bu-dyck-repeat-after.csv td-dyck-repeat-after.csv na-dyck-repeat-after.csv -l bottom-up top-down naive -p "results small"` <br>
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()(" -f bu-small-dyck-repeat-after.csv td-small-dyck-repeat-after.csv na-small-dyck-repeat-after.csv -l bottom-up top-down naive -p results` <br>
 
 Plot Dyck small repeat before:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form )()...()" -f bu-dyck-repeat-before.csv td-dyck-repeat-before.csv na-dyck-repeat-before.csv -l bottom-up top-down naive -p "results small"` <br>
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form )()...()" -f bu-small-dyck-repeat-before.csv td-small-dyck-repeat-before.csv na-small-dyck-repeat-before.csv -l bottom-up top-down naive -p results` <br>
 
 Plot Dyck small stupid (empty language):
-`python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-stupid.csv td-stupid.csv na-stupid.csv -l bottom-up top-down naive -p "results small"` <br>
+`python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results` <br>
 
 Plot Dyck repeat naive + top-down:
 `python CYK-parser-java/plot.py -t "Dyck language with input on the form ()...()" -f td-dyck-repeat.csv na-dyck-repeat.csv -l top-down naive -p results` <br>
