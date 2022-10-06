@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class Grammar {
+public abstract class Grammar { //REFACTORISERA???
     private int start;
     private int numNT;
     private HashMap<Character, Integer> ids;
@@ -16,9 +16,9 @@ public abstract class Grammar {
 
     public Grammar(String[] rules) {
         parseGrammar(rules);
-    }
+    } //Flytta dessa till superklass???
 
-    public Grammar(String fileName) {
+    public Grammar(String fileName) { //Flytta dessa till superklass???
         try {
             File file = new File(fileName);
             Scanner sc = new Scanner(file);

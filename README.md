@@ -10,6 +10,7 @@ Parse, RuntTest, TestStrings
 
 
 ### Format for grammar file:
+(first nt = start nt!)
 !!!!
 
 ### Format for input string file:
