@@ -1,16 +1,19 @@
 package run;
 
-import grammar.LinearGrammar;
-import grammar.LinearGrammarFromFile;
-import parser.LinearParserTD;
+import grammar.*;
+import parser.*;
 
 public class Temp {
     public static void main(String[] args) {
-        LinearGrammar g = new LinearGrammarFromFile("linearGrammarEx.txt");
-        LinearParserTD p = new LinearParserTD();
+// Language from spec: (ab?)^nbc^n
+        String input = "ababbcc"; // "aabaaaabcccccc";
 
-// (ab?)^nbc^n
+        LinearGrammar lg = new LinearGrammarFromFile("linearGrammarEx.txt");
+        LinearParserTD lp = new LinearParserTD();
+        System.out.println(lp.parse(lg, input));
 
-        System.out.println(p.parse(g, "aabaaaabcccccc"));
+        Grammar cg = new GrammarFromFile("linearGrammarEx.txt", true);
+        Parser cp = new ParserTD();
+        System.out.println(cp.parse(cg, input));
     }
 }

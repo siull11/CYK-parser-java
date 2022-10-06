@@ -3,6 +3,7 @@ package grammar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public abstract class Grammar { //REFACTORISERA???
@@ -30,6 +31,22 @@ public abstract class Grammar { //REFACTORISERA???
             }
             String[] a = rules.toArray(String[]::new);
             parseGrammar(a);
+        } catch (Exception e) {
+            System.out.println("Failed to read from file " + fileName + ". Error: " + e);
+            System.exit(e.hashCode());
+        }
+    }
+
+    public Grammar(String fileName, boolean linear) { //Flytta dessa till superklass???
+        try {
+            File file = new File(fileName);
+            Scanner sc = new Scanner(file);
+            ArrayList<String> rules = new ArrayList<>();
+            while (sc.hasNextLine()) {
+                rules.add(sc.nextLine());
+            }
+            String[] a = rules.toArray(String[]::new);
+            parseLinearGrammar(a);
         } catch (Exception e) {
             System.out.println("Failed to read from file " + fileName + ". Error: " + e);
             System.exit(e.hashCode());
@@ -117,6 +134,48 @@ public abstract class Grammar { //REFACTORISERA???
                 T_to_NTs.put(t, new Integer[]{ntId});
             }
         }
+    }
+
+    private void parseLinearGrammar(String[] rules) { // KOMMETERA!!!
+        HashSet<Character> nts = new HashSet<>();
+        HashMap<Character, Character> TtoNT = new HashMap<>();
+
+        for (String rule: rules) {
+            nts.add(rule.charAt(0));
+            if (rule.length() == 3) {
+                TtoNT.put(rule.charAt(2), rule.charAt(0));
+            }
+        }
+
+        ArrayList<String> rulesCNF = new ArrayList<>();
+
+        for (String rule: rules) {
+            if (rule.length() == 4) { // Produces non-terminal & terminal
+                char t = rule.charAt(Character.isUpperCase(rule.charAt(3)) ? 2 : 3);
+                char nt = 'A';
+                if (TtoNT.containsKey(t)) {
+                    nt = TtoNT.get(t);
+                } else {
+                    while (nts.contains(nt)) nt++;
+                    nts.add(nt);
+                }
+
+                if (Character.isUpperCase(rule.charAt(3))) {
+                    rulesCNF.add(rule.charAt(0) + " " + nt + rule.charAt(3));
+                } else {
+                    rulesCNF.add(rule.charAt(0) + " " + rule.charAt(2) + nt);
+                }
+
+                if (!TtoNT.containsKey(t)) {
+                    TtoNT.put(t, nt);
+                    rulesCNF.add(nt + " " + t);
+                }
+            } else { // Produces terminal
+                rulesCNF.add(rule);
+            }
+        }
+
+        parseGrammar(rulesCNF.toArray(String[]::new));
     }
 
     public boolean canProduceTerminal(int nt, char t) {  //Flytta till super!!!
