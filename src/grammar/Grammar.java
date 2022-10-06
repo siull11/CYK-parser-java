@@ -8,11 +8,13 @@ import java.util.Scanner;
 public abstract class Grammar { //REFACTORISERA???
     private int start;
     private int numNT;
-    private HashMap<Character, Integer> ids;
+    private HashMap<Character, Integer> ids; //Flytta till super!!!
     private int[][][] NT_to_NTs;
     private Integer[][][] NTs_to_NT;
     private char[][] NT_to_Ts;
     private HashMap<Character, Integer[]> T_to_NTs;
+
+    // FIXA linjär t cnf constructor!!!
 
     public Grammar(String[] rules) {
         parseGrammar(rules);
@@ -117,7 +119,7 @@ public abstract class Grammar { //REFACTORISERA???
         }
     }
 
-    public boolean canProduceTerminal(int nt, char t) {
+    public boolean canProduceTerminal(int nt, char t) {  //Flytta till super!!!
         char[] ts = NT_to_Ts[nt];
         if (ts != null) {
             for (char t2: ts) {
@@ -129,7 +131,7 @@ public abstract class Grammar { //REFACTORISERA???
         return false;
     }
 
-    private void addId(char nt) {
+    private void addId(char nt) {  //Flytta till super!!!
         if (!ids.containsKey(nt)) {
             ids.put(nt, ids.size());
         }

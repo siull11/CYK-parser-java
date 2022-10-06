@@ -119,6 +119,18 @@ public abstract class LinearGrammar {
         }
     }
 
+    public boolean canProduceTerminal(int nt, char t) {
+        char[] ts = NT_to_Ts[nt];
+        if (ts != null) {
+            for (char t2: ts) {
+                if (t == t2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public int getStart() {
         return start;
     }
@@ -133,10 +145,6 @@ public abstract class LinearGrammar {
 
     public PairNTRight[][] getNT_to_TNT() {
         return NT_to_TNT;
-    }
-
-    public char[][] getNT_to_Ts() {
-        return NT_to_Ts;
     }
 
     public class PairNTLeft {

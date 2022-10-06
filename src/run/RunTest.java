@@ -14,7 +14,7 @@ public class RunTest {
     Command line arguments (args): [g, m, s, r]
         g is the grammar file name
         r is the amount of runs to do and average over (3 is min!!! ändra???)
-        m is the parser method (t for top-down, b for bottom-up, n for naive)
+        m is the parser method (t for top-down, tl for linear top-down, b for bottom-up, bb for bottom-up with bool array, n for naive)
         s is the file name for the strings to parse
  */
     public static void main(String[] args) {
