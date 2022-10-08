@@ -38,6 +38,7 @@ public abstract class LinearGrammar {
         ArrayList<String> tRules = new ArrayList<>();
 
         for (String rule: rules) {
+            System.out.println(rule);
             char nt = rule.charAt(0);
             addId(nt);
 
@@ -147,7 +148,7 @@ public abstract class LinearGrammar {
         return NT_to_TNT;
     }
 
-    public class PairNTLeft {
+    public static class PairNTLeft {
         public final int nt;
         public final char t;
 
@@ -157,7 +158,7 @@ public abstract class LinearGrammar {
         }
     }
 
-    public class PairNTRight {
+    public static class PairNTRight {
         public final char t;
         public final int nt;
 

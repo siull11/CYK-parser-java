@@ -61,6 +61,7 @@ public abstract class Grammar { //REFACTORISERA???
         ArrayList<String> tRules = new ArrayList<>();
 
         for (String rule: rules) {
+            System.out.println(rule);
             char nt = rule.charAt(0);
             addId(nt);
 
@@ -137,13 +138,22 @@ public abstract class Grammar { //REFACTORISERA???
     }
 
     private void parseLinearGrammar(String[] rules) { // KOMMETERA!!!
-        HashSet<Character> nts = new HashSet<>();
+        HashMap<Character, Boolean> nts = new HashMap<>();
         HashMap<Character, Character> TtoNT = new HashMap<>();
 
         for (String rule: rules) {
-            nts.add(rule.charAt(0));
-            if (rule.length() == 3) {
-                TtoNT.put(rule.charAt(2), rule.charAt(0));
+            char nt = rule.charAt(0);
+            if (nts.containsKey(nt)) {;
+                nts.put(nt, nts.get(nt) && rule.length() == 3);
+            } else {
+                nts.put(nt, rule.length() == 3);
+            }
+        }
+
+        for (String rule: rules) {
+            char nt = rule.charAt(0);
+            if (rule.length() == 3 && nts.get(nt)) {
+                TtoNT.put(rule.charAt(2), nt);
             }
         }
 
@@ -156,8 +166,8 @@ public abstract class Grammar { //REFACTORISERA???
                 if (TtoNT.containsKey(t)) {
                     nt = TtoNT.get(t);
                 } else {
-                    while (nts.contains(nt)) nt++;
-                    nts.add(nt);
+                    while (nts.containsKey(nt)) nt++;
+                    nts.put(nt, true);
                 }
 
                 if (Character.isUpperCase(rule.charAt(3))) {
