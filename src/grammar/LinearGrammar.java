@@ -2,16 +2,11 @@ package grammar;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class LinearGrammar {
-    private int start;
-    private int numNT;
-    private HashMap<Character, Integer> ids;
+public abstract class LinearGrammar extends Grammar {
     private PairNTLeft[][] NT_to_NTT;
     private PairNTRight[][] NT_to_TNT;
-    private char[][] NT_to_Ts;
 
     public LinearGrammar(String fileName) {
         try {
@@ -30,15 +25,11 @@ public abstract class LinearGrammar {
     }
 
     private void parseGrammar(String[] rules) {
-        start = 0;
-        ids = new HashMap<>();
-
         ArrayList<String> ntLeftRules = new ArrayList<>();
         ArrayList<String> ntRightRules = new ArrayList<>();
         ArrayList<String> tRules = new ArrayList<>();
 
         for (String rule: rules) {
-            System.out.println(rule);
             char nt = rule.charAt(0);
             addId(nt);
 
@@ -112,32 +103,6 @@ public abstract class LinearGrammar {
                 NT_to_Ts[ntId] = arr;
             }
         }
-    }
-
-    private void addId(char nt) {
-        if (!ids.containsKey(nt)) {
-            ids.put(nt, ids.size());
-        }
-    }
-
-    public boolean canProduceTerminal(int nt, char t) {
-        char[] ts = NT_to_Ts[nt];
-        if (ts != null) {
-            for (char t2: ts) {
-                if (t == t2) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public int getNumNT() {
-        return numNT;
     }
 
     public PairNTLeft[][] getNT_to_NTT() {

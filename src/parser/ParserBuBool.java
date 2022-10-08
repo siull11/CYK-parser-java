@@ -1,6 +1,6 @@
 package parser;
 
-import grammar.Grammar;
+import grammar.CNFGrammar;
 
 import java.util.HashMap;
 
@@ -9,7 +9,7 @@ public class ParserBuBool implements Parser {
     private long counter;
 
     @Override
-    public boolean parse(Grammar g, String s) { // Denna ineffektiv (skapa en verision som loopar över alla regler?)???
+    public boolean parse(CNFGrammar g, String s) { // Denna ineffektiv (skapa en verision som loopar över alla regler?)???
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();

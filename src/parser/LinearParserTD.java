@@ -1,6 +1,6 @@
 package parser;
 
-import grammar.Grammar;
+import grammar.CNFGrammar;
 import grammar.LinearGrammar;
 
 // CYK algorithm top-down implementation for linear grammars
@@ -11,7 +11,7 @@ public class LinearParserTD implements Parser {
     private Boolean[][][] table;
 
     @Override
-    public boolean parse(Grammar g, String s) {
+    public boolean parse(CNFGrammar g, String s) {
         return false;
     }
 

@@ -1,7 +1,7 @@
 package run;
 
-import grammar.Grammar;
-import grammar.GrammarFromFile;
+import grammar.CNFGrammar;
+import grammar.CNFGrammarFromFile;
 import parser.Parser;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class RunTest {
         }
         System.out.println("Test params: [g: " + args[0] + ", r: " + args[1] + ", m: " + args[2] + ", s: " + args[3] + "]");
 
-        Grammar g = new GrammarFromFile(args[0]);
+        CNFGrammar g = new CNFGrammarFromFile(args[0]);
         Parser p = Parse.createParser(args[2]);
 
         try {
@@ -43,7 +43,7 @@ public class RunTest {
         }
     }
 
-    public static void runTest(Grammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
+    public static void runTest(CNFGrammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
         p.parse(g, s); // Dry run
         boolean res = false;
         long count = 0;

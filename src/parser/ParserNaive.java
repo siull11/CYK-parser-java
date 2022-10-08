@@ -1,15 +1,15 @@
 package parser;
 
-import grammar.Grammar;
+import grammar.CNFGrammar;
 
 // CYK algorithm naive implementation
 public class ParserNaive implements Parser {
     private long counter;
-    private Grammar g;
+    private CNFGrammar g;
     private String s;
 
     @Override
-    public boolean parse(Grammar g, String s) {
+    public boolean parse(CNFGrammar g, String s) {
         this.g = g;
         this.s = s;
         counter = 0;

@@ -1,6 +1,6 @@
 package parser;
 
-import grammar.Grammar;
+import grammar.CNFGrammar;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,7 +11,7 @@ public class ParserBU implements Parser {
     private long counter;
 
     @Override
-    public boolean parse(Grammar g, String s) {
+    public boolean parse(CNFGrammar g, String s) {
         counter = 0;
         int n = s.length();
         HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();

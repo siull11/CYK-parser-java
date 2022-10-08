@@ -1,8 +1,7 @@
 package run;
 
-import grammar.Grammar;
-import grammar.GrammarFromFile;
-import grammar.LinearGrammarFromFile;
+import grammar.CNFGrammar;
+import grammar.CNFGrammarFromFile;
 import parser.Parser;
 
 public class Parse {
@@ -17,7 +16,7 @@ public class Parse {
             System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string>");
             System.exit(1);
         }
-        Grammar g = new GrammarFromFile(args[0]); //FEL!!! fixa med fixa nedan
+        CNFGrammar g = new CNFGrammarFromFile(args[0]); //FEL!!! fixa med fixa nedan
         Parser p = createParser(args[1]);
         System.out.println("String: " + args[2] + ", accept: " + p.parse(g, args[2]) + ", count: " + p.getCounter());
     }

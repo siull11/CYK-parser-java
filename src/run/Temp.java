@@ -12,7 +12,7 @@ public class Temp {
         LinearParserTD lp = new LinearParserTD();
         System.out.println(lp.parse(lg, input));
 
-        Grammar cg = new GrammarFromFile("linearGrammarEx.txt", true);
+        CNFGrammar cg = new CNFGrammarFromFile("linearGrammarEx.txt", true);
         Parser cp = new ParserTD();
         System.out.println(cp.parse(cg, input));
     }
