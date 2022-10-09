@@ -49,39 +49,50 @@ Plot Dyck bu:
 Solution:
 `python CYK-parser-java/plot.py -t "Dyck language (bottom-up)" -f bu-dyck-inside.csv bu-dyck-repeat.csv bu-dyck-repeat-after.csv bu-dyck-repeat-before.csv -l "bottom-up ((...))" "bottom-up ()...()" "bottom-up ()...()(" "bottom-up )()...()" -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
 
+
 Plot Dyck td slow:
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, slow cases)" -f td-dyck-inside.csv td-dyck-repeat-after.csv -l "top-down ((...))" "top-down ()...()(" -p results` <br>
 Solution:
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, slow cases)" -f td-dyck-inside.csv td-dyck-repeat-after.csv -l "top-down ((...))" "top-down ()...()(" -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
+
 
 Plot Dyck td fast:
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, fast cases)" -f td-dyck-repeat.csv td-dyck-repeat-before.csv -l "top-down ()...()" "top-down )()...()" -p results` <br>
 Solution:
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, fast cases)" -f td-dyck-repeat.csv td-dyck-repeat-before.csv -l "top-down ()...()" "top-down )()...()" -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
 
+
 Plot stupid (empty language):
 `python CYK-parser-java/plot.py -t "Empty language" -f bu-stupid.csv td-stupid.csv -l bottom-up top-down -p results` <br>
 Solution:
 `python CYK-parser-java/plot.py -t "Empty language" -f bu-stupid.csv td-stupid.csv -l bottom-up top-down -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
 
+
 Plot Dyck small inside:
 `python CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-small-dyck-inside.csv td-small-dyck-inside.csv na-small-dyck-inside.csv -l bottom-up top-down naive -p results` <br>
+Solution:
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-small-dyck-inside.csv td-small-dyck-inside.csv na-small-dyck-inside.csv -l bottom-up top-down naive -p results -b 3 -x "length n" -y "log_3(time) [log(s)]"` <br>
+
 
 Plot Dyck small repeat:
 `python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()" -f bu-small-dyck-repeat.csv td-small-dyck-repeat.csv na-small-dyck-repeat.csv -l bottom-up top-down naive -p results` <br>
-
-Plot Dyck small repeat after:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()(" -f bu-small-dyck-repeat-after.csv td-small-dyck-repeat-after.csv na-small-dyck-repeat-after.csv -l bottom-up top-down naive -p results` <br>
-
-Plot Dyck small repeat before:
-`python CYK-parser-java/plot.py -t "Dyck language with small input on the form )()...()" -f bu-small-dyck-repeat-before.csv td-small-dyck-repeat-before.csv na-small-dyck-repeat-before.csv -l bottom-up top-down naive -p results` <br>
-
-Plot Dyck small stupid (empty language):
-`python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results` <br>
-
 Plot Dyck repeat naive + top-down:
 `python CYK-parser-java/plot.py -t "Dyck language with input on the form ()...()" -f td-dyck-repeat.csv na-dyck-repeat.csv -l top-down naive -p results` <br>
 
 
-**For school computer**
-`python3 CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-small-dyck-inside.csv td-small-dyck-inside.csv na-small-dyck-inside.csv -l bottom-up top-down naive -p "full run" -b 5 -y ""` <br>
+Plot Dyck small repeat after:
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()(" -f bu-small-dyck-repeat-after.csv td-small-dyck-repeat-after.csv na-small-dyck-repeat-after.csv -l bottom-up top-down naive -p results` <br>
+Solution:
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form ()...()(" -f bu-small-dyck-repeat-after.csv td-small-dyck-repeat-after.csv na-small-dyck-repeat-after.csv -l bottom-up top-down naive -p results -b 3 -x "length n" -y "log_3(time) [log(s)]"` <br>
+
+
+Plot Dyck small repeat before:
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form )()...()" -f bu-small-dyck-repeat-before.csv td-small-dyck-repeat-before.csv na-small-dyck-repeat-before.csv -l bottom-up top-down naive -p results` <br>
+Solution:
+`python CYK-parser-java/plot.py -t "Dyck language with small input on the form )()...()" -f bu-small-dyck-repeat-before.csv td-small-dyck-repeat-before.csv na-small-dyck-repeat-before.csv -l bottom-up top-down naive -p results -b 3 -x "length n" -y "log_3(time) [log(s)]"` <br>
+
+
+Plot Dyck small stupid (empty language):
+`python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results` <br>
+Solution:
+`python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results -b 3 -x "length n" -y "log_3(time) [log(s)]"` <br>

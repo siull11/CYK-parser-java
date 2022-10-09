@@ -47,7 +47,7 @@ public class LinearParserTD implements Parser {
         LinearGrammar.PairNTRight[] right = g.getNT_to_TNT()[nt];
         if (right != null) {
             for (LinearGrammar.PairNTRight production: right) {
-                if (s.charAt(i) == production.t && recursive(production.nt, i+1, j)) {;
+                if (s.charAt(i) == production.t && recursive(production.nt, i+1, j)) {
                     table[i][j][nt] = true;
                     return true;
                 }
