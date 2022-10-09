@@ -8,14 +8,14 @@ public class Temp {
 // Language from spec: (ab?)^nbc^n
         String input = "ababbcc"; // "aabaaaabcccccc";
 
-        LinearGrammar lg = new LinearGrammarFromFile("linearGrammarEx.txt");
+        LinearGrammar lg = new LinearGrammar("linearGrammarEx.txt");
         LinearParserTD lp = new LinearParserTD();
         System.out.println(lp.parse(lg, input) + ", " + lp.getCounter());
         System.out.println(lg);
 
 
-        CNFGrammar cg = new CNFGrammarFromFile("linearGrammarEx.txt", true);
-        Parser cp = new ParserTD();
+        CNFGrammar cg = new CNFGrammar("linearGrammarEx.txt", true);
+        Parser cp = new CNFParserTD();
         System.out.println(cp.parse(cg, input) + ", " + cp.getCounter());
         System.out.println(cg);
     }

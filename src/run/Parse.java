@@ -1,8 +1,8 @@
 package run;
 
 import grammar.CNFGrammar;
-import grammar.CNFGrammarFromFile;
 import parser.Parser;
+import parser.CNFParserTD;
 
 public class Parse {
 /*
@@ -16,7 +16,7 @@ public class Parse {
             System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string>");
             System.exit(1);
         }
-        CNFGrammar g = new CNFGrammarFromFile(args[0]); //FEL!!! fixa med fixa nedan
+        CNFGrammar g = new CNFGrammar(args[0], false); //FEL!!! fixa med fixa nedan
         Parser p = createParser(args[1]);
         System.out.println("String: " + args[2] + ", accept: " + p.parse(g, args[2]) + ", count: " + p.getCounter());
     }
@@ -24,7 +24,7 @@ public class Parse {
     public static Parser createParser(String method) {
         switch (method) {
             case "t":
-                return new parser.ParserTD();
+                return new CNFParserTD();
             case "tl":
                 return new parser.LinearParserTD();
             case "b":

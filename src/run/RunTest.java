@@ -1,7 +1,6 @@
 package run;
 
 import grammar.CNFGrammar;
-import grammar.CNFGrammarFromFile;
 import parser.Parser;
 
 import java.io.File;
@@ -24,7 +23,7 @@ public class RunTest {
         }
         System.out.println("Test params: [g: " + args[0] + ", r: " + args[1] + ", m: " + args[2] + ", s: " + args[3] + "]");
 
-        CNFGrammar g = new CNFGrammarFromFile(args[0]);
+        CNFGrammar g = new CNFGrammar(args[0], false); // FIXA SÅ HANTERAR BÅDE LINEAR O CNF!!!
         Parser p = Parse.createParser(args[2]);
 
         try {

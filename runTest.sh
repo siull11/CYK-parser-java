@@ -7,7 +7,7 @@ declare -r r=$2 # 10
 
 echo "Testing: $file, runs: $r"
 
-while read line; do
+while read line; do # ÄNDRA HÄR???
   echo "$line"
   IFS=' ' read -r -a args <<< "$line"
 

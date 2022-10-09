@@ -3,5 +3,3 @@ S b
 A aS
 A aB
 B bS
-Q q
-R qR

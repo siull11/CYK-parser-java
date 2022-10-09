@@ -1,52 +1,20 @@
 package grammar;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public abstract class CNFGrammar extends Grammar { //REFACTORISERA???
+public class CNFGrammar extends Grammar {
     private int[][][] NT_to_NTs;
     private Integer[][][] NTs_to_NT;
     private HashMap<Character, Integer[]> T_to_NTs;
 
-    public CNFGrammar(String[] rules) {
-        parseGrammar(rules);
-    } //Flytta dessa till superklass???
-
-    public CNFGrammar(String fileName) { //Flytta dessa till superklass???
-        try {
-            File file = new File(fileName);
-            Scanner sc = new Scanner(file);
-            ArrayList<String> rules = new ArrayList<>();
-            while (sc.hasNextLine()) {
-                rules.add(sc.nextLine());
-            }
-            String[] a = rules.toArray(String[]::new);
-            parseGrammar(a);
-        } catch (Exception e) {
-            System.out.println("Failed to read from file " + fileName + ". Error: " + e);
-            System.exit(e.hashCode());
-        }
+    public CNFGrammar(String fileName, boolean linear) {
+        super(fileName);
+        if (linear) parseLinearGrammar();
+        else parseGrammar();
     }
 
-    public CNFGrammar(String fileName, boolean linear) { //Flytta dessa till superklass???
-        try {
-            File file = new File(fileName);
-            Scanner sc = new Scanner(file);
-            ArrayList<String> rules = new ArrayList<>();
-            while (sc.hasNextLine()) {
-                rules.add(sc.nextLine());
-            }
-            String[] a = rules.toArray(String[]::new);
-            parseLinearGrammar(a);
-        } catch (Exception e) {
-            System.out.println("Failed to read from file " + fileName + ". Error: " + e);
-            System.exit(e.hashCode());
-        }
-    }
-
-    private void parseLinearGrammar(String[] rules) { // KOMMETERA!!!
+    private void parseLinearGrammar() { // KOMMETERA!!!
         HashMap<Character, Boolean> nts = new HashMap<>();
         HashMap<Character, Character> TtoNT = new HashMap<>();
 
@@ -94,14 +62,15 @@ public abstract class CNFGrammar extends Grammar { //REFACTORISERA???
             }
         }
 
-        parseGrammar(rulesCNF.toArray(String[]::new));
+        rules = rulesCNF.toArray(String[]::new);
+        parseGrammar();
     }
 
-    private void parseGrammar(String[] rules) {
-        super.rules = rules;
+    private void parseGrammar() {
         ArrayList<String> ntRules = new ArrayList<>();
         ArrayList<String> tRules = new ArrayList<>();
 
+        // Categorize rules
         for (String rule: rules) {
             char nt = rule.charAt(0);
             addId(nt);
@@ -152,28 +121,20 @@ public abstract class CNFGrammar extends Grammar { //REFACTORISERA???
 
         // Parse terminal rules
         for (String rule: tRules) {
-            int ntId = ids.get(rule.charAt(0));
+            int nt = ids.get(rule.charAt(0));
             char t = rule.charAt(2);
 
             // Fill non-terminal to terminal
-            if (NT_to_Ts[ntId] == null) {
-                NT_to_Ts[ntId] = new char[1];
-                NT_to_Ts[ntId][0] = t;
-            } else {
-                char[] arr = new char[NT_to_Ts[ntId].length + 1];
-                System.arraycopy(NT_to_Ts[ntId], 0, arr, 0, NT_to_Ts[ntId].length);
-                arr[arr.length - 1] = t;
-                NT_to_Ts[ntId] = arr;
-            }
+            addNTtoT(nt, t);
 
             // Fill terminal to non-terminal
             if (T_to_NTs.containsKey(t)) {
                 Integer[] arr = new Integer[T_to_NTs.get(t).length + 1];
                 System.arraycopy(T_to_NTs.get(t), 0, arr, 0, T_to_NTs.get(t).length);
-                arr[arr.length - 1] = ntId;
+                arr[arr.length - 1] = nt;
                 T_to_NTs.put(t, arr);
             } else {
-                T_to_NTs.put(t, new Integer[]{ntId});
+                T_to_NTs.put(t, new Integer[]{nt});
             }
         }
     }

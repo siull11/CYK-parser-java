@@ -1,27 +1,14 @@
 package grammar;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public abstract class LinearGrammar extends Grammar {
-    private PairNTLeft[][] NT_to_NTT;
-    private PairNTRight[][] NT_to_TNT;
+public class LinearGrammar extends Grammar {
+    private PairNTT[][] NT_to_NTT;
+    private PairNTT[][] NT_to_TNT;
 
     public LinearGrammar(String fileName) {
-        try {
-            File file = new File(fileName);
-            Scanner sc = new Scanner(file);
-            ArrayList<String> rules = new ArrayList<>();
-            while (sc.hasNextLine()) {
-                rules.add(sc.nextLine());
-            }
-            String[] a = rules.toArray(String[]::new);
-            parseGrammar(a);
-        } catch (Exception e) {
-            System.out.println("Failed to read from file " + fileName + ". Error: " + e);
-            System.exit(e.hashCode());
-        }
+        super(fileName);
+        parseGrammar(rules);
     }
 
     private void parseGrammar(String[] rules) {
@@ -30,6 +17,7 @@ public abstract class LinearGrammar extends Grammar {
         ArrayList<String> ntRightRules = new ArrayList<>();
         ArrayList<String> tRules = new ArrayList<>();
 
+        // Categorize rules
         for (String rule: rules) {
             char nt = rule.charAt(0);
             addId(nt);
@@ -48,7 +36,7 @@ public abstract class LinearGrammar extends Grammar {
         }
 
         numNT = ids.size();
-        NT_to_NTT = new PairNTLeft[numNT][];
+        NT_to_NTT = new PairNTT[numNT][];
 
         // Parse non-terminal terminal rules
         for (String rule: ntLeftRules) {
@@ -57,17 +45,10 @@ public abstract class LinearGrammar extends Grammar {
             char resT = rule.charAt(3);
 
             // Fill non-terminal to non-terminal terminal
-            if (NT_to_NTT[sourceId] == null) {
-                NT_to_NTT[sourceId] = new PairNTLeft[]{new PairNTLeft(resId, resT)};
-            } else {
-                PairNTLeft[] arr = new PairNTLeft[NT_to_NTT[sourceId].length + 1];
-                System.arraycopy(NT_to_NTT[sourceId], 0, arr, 0, NT_to_NTT[sourceId].length);
-                arr[NT_to_NTT[sourceId].length] = new PairNTLeft(resId, resT);
-                NT_to_NTT[sourceId] = arr;
-            }
+            addNTTRule(NT_to_NTT, sourceId, resId, resT);
         }
 
-        NT_to_TNT = new PairNTRight[numNT][];
+        NT_to_TNT = new PairNTT[numNT][];
 
         // Parse terminal non-terminal rules
         for (String rule: ntRightRules) {
@@ -76,61 +57,47 @@ public abstract class LinearGrammar extends Grammar {
             int resId = ids.get(rule.charAt(3));
 
             // Fill non-terminal to terminal non-terminal
-            if (NT_to_TNT[sourceId] == null) {
-                NT_to_TNT[sourceId] = new PairNTRight[]{new PairNTRight(resT, resId)};
-            } else {
-                PairNTRight[] arr = new PairNTRight[NT_to_TNT[sourceId].length + 1];
-                System.arraycopy(NT_to_TNT[sourceId], 0, arr, 0, NT_to_TNT[sourceId].length);
-                arr[NT_to_TNT[sourceId].length] = new PairNTRight(resT, resId);
-                NT_to_TNT[sourceId] = arr;
-            }
+            addNTTRule(NT_to_TNT, sourceId, resId, resT);
         }
 
         NT_to_Ts = new char[numNT][];
 
         // Parse terminal rules
         for (String rule: tRules) {
-            int ntId = ids.get(rule.charAt(0));
+            int nt = ids.get(rule.charAt(0));
             char t = rule.charAt(2);
 
             // Fill non-terminal to terminal
-            if (NT_to_Ts[ntId] == null) {
-                NT_to_Ts[ntId] = new char[1];
-                NT_to_Ts[ntId][0] = t;
-            } else {
-                char[] arr = new char[NT_to_Ts[ntId].length + 1];
-                System.arraycopy(NT_to_Ts[ntId], 0, arr, 0, NT_to_Ts[ntId].length);
-                arr[arr.length - 1] = t;
-                NT_to_Ts[ntId] = arr;
-            }
+            addNTtoT(nt, t);
         }
     }
 
-    public PairNTLeft[][] getNT_to_NTT() {
+    private void addNTTRule(PairNTT[][] rules, int sourceId, int resId, char resT) {
+        if (rules[sourceId] == null) {
+            rules[sourceId] = new PairNTT[]{new PairNTT(resId, resT)};
+        } else {
+            PairNTT[] arr = new PairNTT[rules[sourceId].length + 1];
+            System.arraycopy(rules[sourceId], 0, arr, 0, rules[sourceId].length);
+            arr[rules[sourceId].length] = new PairNTT(resId, resT);
+            rules[sourceId] = arr;
+        }
+    }
+
+    public PairNTT[][] getNT_to_NTT() {
         return NT_to_NTT;
     }
 
-    public PairNTRight[][] getNT_to_TNT() {
+    public PairNTT[][] getNT_to_TNT() {
         return NT_to_TNT;
     }
 
-    public static class PairNTLeft {
+    public static class PairNTT {
         public final int nt;
         public final char t;
 
-        public PairNTLeft(int nt, char t) {
+        public PairNTT(int nt, char t) {
             this.nt = nt;
             this.t = t;
-        }
-    }
-
-    public static class PairNTRight {
-        public final char t;
-        public final int nt;
-
-        public PairNTRight(char t, int nt) {
-            this.t = t;
-            this.nt = nt;
         }
     }
 }
