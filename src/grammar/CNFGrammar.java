@@ -46,7 +46,59 @@ public abstract class CNFGrammar extends Grammar { //REFACTORISERA???
         }
     }
 
+    private void parseLinearGrammar(String[] rules) { // KOMMETERA!!!
+        HashMap<Character, Boolean> nts = new HashMap<>();
+        HashMap<Character, Character> TtoNT = new HashMap<>();
+
+        for (String rule: rules) {
+            char nt = rule.charAt(0);
+            if (nts.containsKey(nt)) {;
+                nts.put(nt, nts.get(nt) && rule.length() == 3);
+            } else {
+                nts.put(nt, rule.length() == 3);
+            }
+        }
+
+        for (String rule: rules) {
+            char nt = rule.charAt(0);
+            if (rule.length() == 3 && nts.get(nt)) {
+                TtoNT.put(rule.charAt(2), nt);
+            }
+        }
+
+        ArrayList<String> rulesCNF = new ArrayList<>();
+
+        for (String rule: rules) {
+            if (rule.length() == 4) { // Produces non-terminal & terminal
+                char t = rule.charAt(Character.isUpperCase(rule.charAt(3)) ? 2 : 3);
+                char nt = 'A';
+                if (TtoNT.containsKey(t)) {
+                    nt = TtoNT.get(t);
+                } else {
+                    while (nts.containsKey(nt)) nt++;
+                    nts.put(nt, true);
+                }
+
+                if (Character.isUpperCase(rule.charAt(3))) {
+                    rulesCNF.add(rule.charAt(0) + " " + nt + rule.charAt(3));
+                } else {
+                    rulesCNF.add(rule.charAt(0) + " " + rule.charAt(2) + nt);
+                }
+
+                if (!TtoNT.containsKey(t)) {
+                    TtoNT.put(t, nt);
+                    rulesCNF.add(nt + " " + t);
+                }
+            } else { // Produces terminal
+                rulesCNF.add(rule);
+            }
+        }
+
+        parseGrammar(rulesCNF.toArray(String[]::new));
+    }
+
     private void parseGrammar(String[] rules) {
+        super.rules = rules;
         ArrayList<String> ntRules = new ArrayList<>();
         ArrayList<String> tRules = new ArrayList<>();
 
@@ -124,57 +176,6 @@ public abstract class CNFGrammar extends Grammar { //REFACTORISERA???
                 T_to_NTs.put(t, new Integer[]{ntId});
             }
         }
-    }
-
-    private void parseLinearGrammar(String[] rules) { // KOMMETERA!!!
-        HashMap<Character, Boolean> nts = new HashMap<>();
-        HashMap<Character, Character> TtoNT = new HashMap<>();
-
-        for (String rule: rules) {
-            char nt = rule.charAt(0);
-            if (nts.containsKey(nt)) {;
-                nts.put(nt, nts.get(nt) && rule.length() == 3);
-            } else {
-                nts.put(nt, rule.length() == 3);
-            }
-        }
-
-        for (String rule: rules) {
-            char nt = rule.charAt(0);
-            if (rule.length() == 3 && nts.get(nt)) {
-                TtoNT.put(rule.charAt(2), nt);
-            }
-        }
-
-        ArrayList<String> rulesCNF = new ArrayList<>();
-
-        for (String rule: rules) {
-            if (rule.length() == 4) { // Produces non-terminal & terminal
-                char t = rule.charAt(Character.isUpperCase(rule.charAt(3)) ? 2 : 3);
-                char nt = 'A';
-                if (TtoNT.containsKey(t)) {
-                    nt = TtoNT.get(t);
-                } else {
-                    while (nts.containsKey(nt)) nt++;
-                    nts.put(nt, true);
-                }
-
-                if (Character.isUpperCase(rule.charAt(3))) {
-                    rulesCNF.add(rule.charAt(0) + " " + nt + rule.charAt(3));
-                } else {
-                    rulesCNF.add(rule.charAt(0) + " " + rule.charAt(2) + nt);
-                }
-
-                if (!TtoNT.containsKey(t)) {
-                    TtoNT.put(t, nt);
-                    rulesCNF.add(nt + " " + t);
-                }
-            } else { // Produces terminal
-                rulesCNF.add(rule);
-            }
-        }
-
-        parseGrammar(rulesCNF.toArray(String[]::new));
     }
 
     public int[][][] getNT_to_NTs() {

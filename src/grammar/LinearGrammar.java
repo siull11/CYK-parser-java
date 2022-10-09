@@ -25,6 +25,7 @@ public abstract class LinearGrammar extends Grammar {
     }
 
     private void parseGrammar(String[] rules) {
+        super.rules = rules;
         ArrayList<String> ntLeftRules = new ArrayList<>();
         ArrayList<String> ntRightRules = new ArrayList<>();
         ArrayList<String> tRules = new ArrayList<>();

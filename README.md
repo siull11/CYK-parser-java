@@ -81,3 +81,7 @@ Plot Dyck small stupid (empty language):
 
 Plot Dyck repeat naive + top-down:
 `python CYK-parser-java/plot.py -t "Dyck language with input on the form ()...()" -f td-dyck-repeat.csv na-dyck-repeat.csv -l top-down naive -p results` <br>
+
+
+**For school computer**
+`python3 CYK-parser-java/plot.py -t "Dyck language with small input on the form ((...))" -f bu-small-dyck-inside.csv td-small-dyck-inside.csv na-small-dyck-inside.csv -l bottom-up top-down naive -p "full run" -b 5 -y ""` <br>

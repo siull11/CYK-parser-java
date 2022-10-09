@@ -1,11 +1,13 @@
 package grammar;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class Grammar {
     private final int start;
     protected int numNT;
     protected HashMap<Character, Integer> ids;
+    protected String[] rules;
     protected char[][] NT_to_Ts;
 
     public Grammar() {
@@ -37,5 +39,10 @@ public abstract class Grammar {
 
     public int getNumNT() {
         return numNT;
+    }
+
+    @Override
+    public String toString() {
+        return "Grammar{" + "rules=" + Arrays.toString(rules) + '}';
     }
 }

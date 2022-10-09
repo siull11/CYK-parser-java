@@ -10,10 +10,13 @@ public class Temp {
 
         LinearGrammar lg = new LinearGrammarFromFile("linearGrammarEx.txt");
         LinearParserTD lp = new LinearParserTD();
-        System.out.println(lp.parse(lg, input));
+        System.out.println(lp.parse(lg, input) + ", " + lp.getCounter());
+        System.out.println(lg);
+
 
         CNFGrammar cg = new CNFGrammarFromFile("linearGrammarEx.txt", true);
         Parser cp = new ParserTD();
-        System.out.println(cp.parse(cg, input));
+        System.out.println(cp.parse(cg, input) + ", " + cp.getCounter());
+        System.out.println(cg);
     }
 }
