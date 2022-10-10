@@ -8,10 +8,15 @@ import java.util.List;
 
 // CYK algorithm bottom-up implementation (with array of integers)
 public class ParserBU implements Parser {
+    private CNFGrammar g;
     private long counter;
 
+    public ParserBU(CNFGrammar g) {
+        this.g = g;
+    }
+
     @Override
-    public boolean parse(CNFGrammar g, String s) {
+    public boolean parse(String s) {
         counter = 0;
         int n = s.length();
         HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();

@@ -6,10 +6,13 @@ import grammar.CNFGrammar;
 public class CNFParserTD extends ParserTD {
     private CNFGrammar g;
 
-    @Override
-    public boolean parse(CNFGrammar g, String s) {
-        int n = init(g, s);
+    public CNFParserTD(CNFGrammar g) {
         this.g = g;
+    }
+
+    @Override
+    public boolean parse(String s) {
+        int n = init(g, s);
         return recursive(g.getStart(), 0, n-1);
     }
 

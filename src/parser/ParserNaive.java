@@ -4,13 +4,16 @@ import grammar.CNFGrammar;
 
 // CYK algorithm naive implementation
 public class ParserNaive implements Parser {
-    private long counter;
     private CNFGrammar g;
+    private long counter;
     private String s;
 
-    @Override
-    public boolean parse(CNFGrammar g, String s) {
+    public ParserNaive(CNFGrammar g) {
         this.g = g;
+    }
+
+    @Override
+    public boolean parse(String s) {
         this.s = s;
         counter = 0;
         return recursive(g.getStart(), 0, s.length()-1);

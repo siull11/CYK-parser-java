@@ -1,20 +1,18 @@
 package parser;
 
-import grammar.CNFGrammar;
 import grammar.LinearGrammar;
 
 // CYK algorithm top-down implementation for linear grammars
 public class LinearParserTD extends ParserTD {
     private LinearGrammar g;
 
-    @Override
-    public boolean parse(CNFGrammar g, String s) {
-        return false;
+    public LinearParserTD(LinearGrammar g) {
+        this.g = g;
     }
 
-    public boolean parse(LinearGrammar g, String s) {
+    @Override
+    public boolean parse(String s) {
         int n = init(g, s);
-        this.g = g;
         return recursive(g.getStart(), 0, n-1);
     }
 

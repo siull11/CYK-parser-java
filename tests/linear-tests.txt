@@ -1,0 +1,10 @@
+t linear_stupid.txt l stupid.txt td-cnf-stupid.csv
+t linear_left.txt l stupid.txt td-cnf-left.csv
+t linear_right.txt l stupid.txt td-cnf-right.csv
+t linear_ex.txt l abc.txt td-cnf-ex-abc.csv
+t linear_ex.txt l abbc.txt td-cnf-ex-abbc.csv
+tl linear_stupid.txt l stupid.txt td-linear-stupid.csv
+tl linear_left.txt l stupid.txt td-linear-left.csv
+tl linear_right.txt l stupid.txt td-linear-right.csv
+tl linear_ex.txt l abc.txt td-linear-ex-abc.csv
+tl linear_ex.txt l abbc.txt td-linear-ex-abbc.csv

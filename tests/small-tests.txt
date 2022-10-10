@@ -1,15 +1,15 @@
-t dyck.txt small-dyck-inside.txt td-small-dyck-inside.csv
-t dyck.txt small-dyck-repeat.txt td-small-dyck-repeat.csv
-t dyck.txt small-dyck-repeat-after.txt td-small-dyck-repeat-after.csv
-t dyck.txt small-dyck-repeat-before.txt td-small-dyck-repeat-before.csv
-t stupid.txt small-stupid.txt td-small-stupid.csv
-b dyck.txt small-dyck-inside.txt bu-small-dyck-inside.csv
-b dyck.txt small-dyck-repeat.txt bu-small-dyck-repeat.csv
-b dyck.txt small-dyck-repeat-after.txt bu-small-dyck-repeat-after.csv
-b dyck.txt small-dyck-repeat-before.txt bu-small-dyck-repeat-before.csv
-b stupid.txt small-stupid.txt bu-small-stupid.csv
-n dyck.txt small-dyck-inside.txt na-small-dyck-inside.csv
-n dyck.txt small-dyck-repeat.txt na-small-dyck-repeat.csv
-n dyck.txt small-dyck-repeat-after.txt na-small-dyck-repeat-after.csv
-n dyck.txt small-dyck-repeat-before.txt na-small-dyck-repeat-before.csv
-n stupid.txt small-stupid.txt na-small-stupid.csv
+t dyck.txt c small-dyck-inside.txt td-small-dyck-inside.csv
+t dyck.txt c small-dyck-repeat.txt td-small-dyck-repeat.csv
+t dyck.txt c small-dyck-repeat-after.txt td-small-dyck-repeat-after.csv
+t dyck.txt c small-dyck-repeat-before.txt td-small-dyck-repeat-before.csv
+t stupid.txt c small-stupid.txt td-small-stupid.csv
+b dyck.txt c small-dyck-inside.txt bu-small-dyck-inside.csv
+b dyck.txt c small-dyck-repeat.txt bu-small-dyck-repeat.csv
+b dyck.txt c small-dyck-repeat-after.txt bu-small-dyck-repeat-after.csv
+b dyck.txt c small-dyck-repeat-before.txt bu-small-dyck-repeat-before.csv
+b stupid.txt c small-stupid.txt bu-small-stupid.csv
+n dyck.txt c small-dyck-inside.txt na-small-dyck-inside.csv
+n dyck.txt c small-dyck-repeat.txt na-small-dyck-repeat.csv
+n dyck.txt c small-dyck-repeat-after.txt na-small-dyck-repeat-after.csv
+n dyck.txt c small-dyck-repeat-before.txt na-small-dyck-repeat-before.csv
+n stupid.txt c small-stupid.txt na-small-stupid.csv

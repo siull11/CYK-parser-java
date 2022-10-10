@@ -9,14 +9,14 @@ public class Temp {
         String input = "ababbcc"; // "aabaaaabcccccc";
 
         LinearGrammar lg = new LinearGrammar("linearGrammarEx.txt");
-        LinearParserTD lp = new LinearParserTD();
-        System.out.println(lp.parse(lg, input) + ", " + lp.getCounter());
+        LinearParserTD lp = new LinearParserTD(lg);
+        System.out.println(lp.parse(input) + ", " + lp.getCounter());
         System.out.println(lg);
 
 
         CNFGrammar cg = new CNFGrammar("linearGrammarEx.txt", true);
-        Parser cp = new CNFParserTD();
-        System.out.println(cp.parse(cg, input) + ", " + cp.getCounter());
+        Parser cp = new CNFParserTD(cg);
+        System.out.println(cp.parse(input) + ", " + cp.getCounter());
         System.out.println(cg);
     }
 }

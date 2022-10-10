@@ -1,1 +1,1 @@
-n dyck.txt dyck-repeat.txt na-dyck-repeat.csv
+n dyck.txt c dyck-repeat.txt na-dyck-repeat.csv

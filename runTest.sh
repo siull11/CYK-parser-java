@@ -7,9 +7,9 @@ declare -r r=$2 # 10
 
 echo "Testing: $file, runs: $r"
 
-while read line; do # ÄNDRA HÄR???
+while read -r line; do
   echo "$line"
   IFS=' ' read -r -a args <<< "$line"
 
-  java -XX:CompileThreshold=1 -jar "$jarPath" "${args[1]}" "$r" "${args[0]}" "${args[2]}" > "$resPath/${args[3]//[$'\t\r\n']}"
+  java -XX:CompileThreshold=1 -jar "$jarPath" "${args[1]}" "${args[2]}" "$r" "${args[0]}" "${args[3]}" > "$resPath/${args[4]//[$'\t\r\n']}"
 done <"$file"

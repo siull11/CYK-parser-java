@@ -5,11 +5,16 @@ import grammar.CNFGrammar;
 import java.util.HashMap;
 
 // CYK algorithm bottom-up implementation (with array of booleans)
-public class ParserBuBool implements Parser {
+public class ParserBUBool implements Parser {
+    private CNFGrammar g;
     private long counter;
 
+    public ParserBUBool(CNFGrammar g) {
+        this.g = g;
+    }
+
     @Override
-    public boolean parse(CNFGrammar g, String s) { // Denna ineffektiv (skapa en verision som loopar över alla regler?)???
+    public boolean parse(String s) { // Denna ineffektiv (skapa en verision som loopar över alla regler?)???
         counter = 0;
         int n = s.length();
         int numNT = g.getNumNT();

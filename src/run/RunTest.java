@@ -1,49 +1,61 @@
 package run;
 
-import grammar.CNFGrammar;
+import grammar.*;
+import parser.LinearParserTD;
 import parser.Parser;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static run.Parse.createCNFParser;
 
 public class RunTest {
 /*
-    Command line arguments (args): [g, m, s, r]
+    Command line arguments (args): [g, l, r, m, s]
         g is the grammar file name
-        r is the amount of runs to do and average over (3 is min!!! ändra???)
+        l is the weather the grammar file is in linear format or not (l for linear, c for not linear (CNF))
+        r is the amount of runs to do and average over (min value 3)
         m is the parser method (t for top-down, tl for linear top-down, b for bottom-up, bb for bottom-up with bool array, n for naive)
         s is the file name for the strings to parse
  */
     public static void main(String[] args) {
-        if (args.length != 4) {
-            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <runs> <parser method> <string file>");
+        if (args.length != 5) {
+            System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <linear> <runs> <parser method> <string file>");
             System.exit(1);
         }
-        System.out.println("Test params: [g: " + args[0] + ", r: " + args[1] + ", m: " + args[2] + ", s: " + args[3] + "]");
+        System.out.println("Test params: [g: " + args[0] + ", l: " + args[1] + ", r: " + args[2] + ", m: " + args[3] + ", s: " + args[4] + "]");
 
-        CNFGrammar g = new CNFGrammar(args[0], false); // FIXA SÅ HANTERAR BÅDE LINEAR O CNF!!!
-        Parser p = Parse.createParser(args[2]);
+        boolean linearGrammar = Objects.equals(args[1], "l");
+        Parser p;
+        if (linearGrammar && Objects.equals(args[3], "tl")) // Linear parse
+            p = new LinearParserTD(new LinearGrammar(args[0]));
+        else // Grammar file non-linear
+            p = createCNFParser(new CNFGrammar(args[0], linearGrammar), args[3]);
 
+        runTests(p, args[4], Integer.parseInt(args[2]));
+    }
+
+    private static void runTests(Parser p, String fileName, int runs) {
         try {
-            File file = new File("resources/strings/" + args[3]);
+            File file = new File("resources/strings/" + fileName);
             Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
+            while (sc.hasNextLine()) { // For each string in file
                 try {
-                    runTest(g, p, null, sc.nextLine(), Integer.parseInt(args[1]));
+                    runTest(p, sc.nextLine(), runs);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         } catch (Exception e) {
-            System.out.println("Failed to read from file " + args[2] + ". Error: " + e);
+            System.out.println("Failed to read from file " + "resources/strings/" + fileName + ". Error: " + e);
             System.exit(e.hashCode());
         }
     }
 
-    public static void runTest(CNFGrammar g, Parser p, FileWriter f, String s, int runs) throws IOException {
-        p.parse(g, s); // Dry run
+    private static void runTest(Parser p, String s, int runs) throws IOException {
+        p.parse(s); // Dry run
         boolean res = false;
         long count = 0;
         long[] time = new long[runs];
@@ -53,7 +65,7 @@ public class RunTest {
         for (int i = 0; i < runs; i++) { // Do test runs
             // Do run, measure time
             long t1 = System.nanoTime();
-            res = p.parse(g, s);
+            res = p.parse(s);
             long t2 = System.nanoTime();
 
             // Save time and counter
@@ -69,13 +81,12 @@ public class RunTest {
             sumTime += time[i];
         }
 
-        // Print to file or stdout
-        String out = s.length() + "," +
-                String.valueOf(res).charAt(0) + "," + count + "," +
-                ((double) sumTime/(runs-2))/1000000000;
-        if (f != null) {
-            f.write(out + "\n");
-        }
-        System.out.println(out);
+        // Print res
+        System.out.println(
+            s.length() + "," +
+            String.valueOf(res).charAt(0) + "," +
+            count + "," +
+            ((double) sumTime/(runs-2))/1000000000
+        );
     }
 }

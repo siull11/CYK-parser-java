@@ -9,6 +9,8 @@ public class TestStrings {
     private final String[] dyckRepeatStringsFailBefore;
     private final String[] dyckRepeatStringsFailAfter;
     private final String[] stupidStrings;
+    private final String[] abcStrings;
+    private final String[] abbcStrings;
 
 /*
     Command line arguments (args): [n, d]
@@ -29,6 +31,8 @@ public class TestStrings {
         printToFile("dyck-repeat-before.txt", ts.getDyckRepeatStringsFailBefore());
         printToFile("dyck-repeat-after.txt", ts.getDyckRepeatStringsFailAfter());
         printToFile("stupid.txt", ts.getStupidStrings());
+        printToFile("abc.txt", ts.getABCStrings());
+        printToFile("abbc.txt", ts.getABBCStrings());
     }
 
     public static void printToFile(String fileName, String[] strings) {
@@ -91,6 +95,44 @@ public class TestStrings {
             sb.append(repeat);
             stupidStrings[i] = sb.toString();
         }
+
+        // Create string "aaa..." and "ccc...", with len dLen/2
+        sb1 = new StringBuilder();
+        sb2 = new StringBuilder();
+        for (int i = 0; i < (int) ((float) dLen/2 + 0.5); i++) {
+            sb1.append("a");
+            sb2.append("c");
+        }
+        before = sb1.toString();
+        after = sb2.toString();
+        // Create strings "a^nbc^n", starting with len dLen+1, incrementing with dLen until maxLen+1
+        sb = new StringBuilder();
+        sb.append("b");
+        abcStrings = new String[maxLen/dLen];
+        for (int i = 0; i < maxLen/dLen; i++) {
+            sb.insert(0, before);
+            sb.append(after);
+            abcStrings[i] = sb.toString();
+        }
+
+        // Create string "abab..." and "ccc...", with len 2dLen/3 and dLen/3
+        sb1 = new StringBuilder();
+        sb2 = new StringBuilder();
+        for (int i = 0; i < (int) ((float) dLen/3 + 0.5); i++) {
+            sb1.append("ab");
+            sb2.append("c");
+        }
+        before = sb1.toString();
+        after = sb2.toString();
+        // Create strings "(ab)^nbc^n", amount of strings will be same as other cases but lengths are a bit fucky
+        sb = new StringBuilder();
+        sb.append("b");
+        abbcStrings = new String[maxLen/dLen];
+        for (int i = 0; i < maxLen/dLen; i++) {
+            sb.insert(0, before);
+            sb.append(after);
+            abbcStrings[i] = sb.toString();
+        }
     }
 
     public String[] getDyckInsideStrings() {
@@ -111,5 +153,13 @@ public class TestStrings {
 
     public String[] getStupidStrings() {
         return stupidStrings;
+    }
+
+    public String[] getABCStrings() {
+        return abcStrings;
+    }
+
+    public String[] getABBCStrings() {
+        return abbcStrings;
     }
 }

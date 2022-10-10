@@ -3,6 +3,7 @@ package run;
 import grammar.CNFGrammar;
 import parser.Parser;
 import parser.CNFParserTD;
+import parser.ParserBUBool;
 
 public class Parse {
 /*
@@ -16,31 +17,25 @@ public class Parse {
             System.out.println("Usage: java -XX:CompileThreshold=1 -jar fileName.jar <grammar file> <parser method> <string>");
             System.exit(1);
         }
-        CNFGrammar g = new CNFGrammar(args[0], false); //FEL!!! fixa med fixa nedan
-        Parser p = createParser(args[1]);
-        System.out.println("String: " + args[2] + ", accept: " + p.parse(g, args[2]) + ", count: " + p.getCounter());
+        CNFGrammar g = new CNFGrammar(args[0], false); //FEL!!!
+        Parser p = createCNFParser(g, args[1]);
+        System.out.println("String: " + args[2] + ", accept: " + p.parse(args[2]) + ", count: " + p.getCounter());
     }
 
-    public static Parser createParser(String method) {
+    public static Parser createCNFParser(CNFGrammar g, String method) {
         switch (method) {
             case "t":
-                return new CNFParserTD();
-            case "tl":
-                return new parser.LinearParserTD();
+                return new CNFParserTD(g);
             case "b":
-                return new parser.ParserBU();
+                return new parser.ParserBU(g);
             case "bb":
-                return new parser.ParserBuBool();
+                return new ParserBUBool(g);
             case "n":
-                return new parser.ParserNaive();
+                return new parser.ParserNaive(g);
             default:
-                System.out.println("Unknown parser method: " + method);
+                System.out.println("Unknown CNF parser method: " + method);
                 System.exit(1);
         }
         return null;
     }
-
-    /*public static Grammar createGrammar(boolean linear, String file) { //FIXA!!!
-        return !linear ? new GrammarFromFile(file) : new LinearGrammarFromFile(file);
-    }*/
 }

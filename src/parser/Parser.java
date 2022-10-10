@@ -1,10 +1,8 @@
 package parser;
 
-import grammar.CNFGrammar;
-
 public interface Parser {
 
-    boolean parse(CNFGrammar g, String s);
+    boolean parse(String s);
 
     long getCounter();
 }
