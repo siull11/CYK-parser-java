@@ -46,7 +46,7 @@ public class CNFGrammar extends Grammar {
                 if (TtoNT.containsKey(t)) { // HÄR ÄR NOG NÅGOT FEL OXÅ!!!
                     nt = TtoNT.get(t);
                 } else {
-                    while (nts.containsKey(nt)) nt++;
+                    while (nts.containsKey(nt)) nt++; // HANDLE EDGE CASE FOR WHEN NTS run out???
                     nts.put(nt, true);
                 }
 
