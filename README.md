@@ -58,8 +58,10 @@ Solution:
 
 Plot Dyck td fast:
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, fast cases)" -f td-dyck-repeat.csv td-dyck-repeat-before.csv -l "top-down ()...()" "top-down )()...()" -p results` <br>
-Solution:
+Solution (n^3, not correct):
 `python CYK-parser-java/plot.py -t "Dyck language (top-down, fast cases)" -f td-dyck-repeat.csv td-dyck-repeat-before.csv -l "top-down ()...()" "top-down )()...()" -p results -d 3 -x "length n" -y "time/g(n) [s/n^3]"` <br>
+Solution (n^2, correct):
+`python CYK-parser-java/plot.py -t "Dyck language (top-down, fast cases)" -f td-dyck-repeat.csv td-dyck-repeat-before.csv -l "top-down ()...()" "top-down )()...()" -p results -d 2 -x "length n" -y "time/g(n) [s/n^2]"` <br>
 
 
 Plot stupid (empty language):
@@ -96,3 +98,17 @@ Plot Dyck small stupid (empty language):
 `python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results` <br>
 Solution:
 `python CYK-parser-java/plot.py -t "Empty language with small input" -f bu-small-stupid.csv td-small-stupid.csv na-small-stupid.csv -l bottom-up top-down naive -p results -b 3 -x "length n" -y "log_3(time) [log(s)]"` <br>
+
+
+Plot linear td:
+`python CYK-parser-java/plot.py -t "Linear grammars (linear top-down)" -f td-linear-stupid.csv td-linear-left.csv td-linear-right.csv td-linear-ex-abc.csv td-linear-ex-abbc.csv -l "empty language" "left language" "right language" "linear language a^xbc^x" "linear language (ab)^xbc^x" -p results` <br>
+Solution:
+`python CYK-parser-java/plot.py -t "Linear grammars (linear top-down)" -f td-linear-stupid.csv td-linear-left.csv td-linear-right.csv td-linear-ex-abc.csv td-linear-ex-abbc.csv -l "empty language" "left language" "right language" "linear language a^xbc^x" "linear language (ab)^xbc^x" -p results -d 2 -x "length n" -y "time/g(n) [s/n^2]"` <br>
+
+
+plot linear converted to cnf td (slow cases):
+`python CYK-parser-java/plot.py -t "Linear grammars (CNF top-down, slow cases)" -f td-cnf-stupid.csv td-cnf-ex-abc.csv -l "empty language" "linear language a^xbc^x" -p results` <br>
+
+
+plot linear converted to cnf td (fast cases):
+`python CYK-parser-java/plot.py -t "Linear grammars (CNF top-down, fast cases)" -f td-cnf-left.csv td-cnf-right.csv td-linear-ex-abbc.csv -l "left language" "right language" "linear language (ab)^xbc^x" -p results` <br>
