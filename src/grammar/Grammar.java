@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class Grammar { // KOMMENTERA hela fil!!!
+public abstract class Grammar {
     private final int start;
     protected int numNT;
     protected HashMap<Character, Integer> ids;
@@ -16,6 +16,7 @@ public abstract class Grammar { // KOMMENTERA hela fil!!!
     public Grammar(String fileName) {
         start = 0;
         ids = new HashMap<>();
+        // Read lines from file and store them in rules
         try {
             File file = new File("resources/grammars/" + fileName);
             Scanner sc = new Scanner(file);

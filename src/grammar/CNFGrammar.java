@@ -14,19 +14,21 @@ public class CNFGrammar extends Grammar {
         else parseGrammar();
     }
 
-    private void parseLinearGrammar() { // KOMMETERA!!!
+    private void parseLinearGrammar() { // FIXA BUGG!!!
         HashMap<Character, Boolean> nts = new HashMap<>();
         HashMap<Character, Character> TtoNT = new HashMap<>();
 
+        // Check if non-terminals only produces a single terminal
         for (String rule: rules) {
             char nt = rule.charAt(0);
             if (nts.containsKey(nt)) {;
                 nts.put(nt, nts.get(nt) && rule.length() == 3);
             } else {
-                nts.put(nt, rule.length() == 3);
+                nts.put(nt, rule.length() == 3); // BUGG OM DEN HAR FLERA REGLER SOM GÅR TILL 1 terminal!!!
             }
         }
 
+        // Add all non-terminal to terminal rules in data structure
         for (String rule: rules) {
             char nt = rule.charAt(0);
             if (rule.length() == 3 && nts.get(nt)) {
@@ -36,18 +38,19 @@ public class CNFGrammar extends Grammar {
 
         ArrayList<String> rulesCNF = new ArrayList<>();
 
+        // Create new set of rules in CNF form
         for (String rule: rules) {
             if (rule.length() == 4) { // Produces non-terminal & terminal
                 char t = rule.charAt(Character.isUpperCase(rule.charAt(3)) ? 2 : 3);
                 char nt = 'A';
-                if (TtoNT.containsKey(t)) {
+                if (TtoNT.containsKey(t)) { // HÄR ÄR NOG NÅGOT FEL OXÅ!!!
                     nt = TtoNT.get(t);
                 } else {
                     while (nts.containsKey(nt)) nt++;
                     nts.put(nt, true);
                 }
 
-                if (Character.isUpperCase(rule.charAt(3))) {
+                if (Character.isUpperCase(rule.charAt(3))) { // SAMMA DETTA MÅSTE NOG ÄNDRAS OXÅ
                     rulesCNF.add(rule.charAt(0) + " " + nt + rule.charAt(3));
                 } else {
                     rulesCNF.add(rule.charAt(0) + " " + rule.charAt(2) + nt);
@@ -62,6 +65,7 @@ public class CNFGrammar extends Grammar {
             }
         }
 
+        // Set rules to equivalent rules in CNF form and parse
         rules = rulesCNF.toArray(String[]::new);
         parseGrammar();
     }

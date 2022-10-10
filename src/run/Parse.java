@@ -1,9 +1,7 @@
 package run;
 
 import grammar.CNFGrammar;
-import parser.Parser;
-import parser.CNFParserTD;
-import parser.ParserBUBool;
+import parser.*;
 
 public class Parse {
 /*
@@ -27,11 +25,11 @@ public class Parse {
             case "t":
                 return new CNFParserTD(g);
             case "b":
-                return new parser.ParserBU(g);
+                return new ParserBU(g);
             case "bb":
                 return new ParserBUBool(g);
             case "n":
-                return new parser.ParserNaive(g);
+                return new ParserNaive(g);
             default:
                 System.out.println("Unknown CNF parser method: " + method);
                 System.exit(1);
