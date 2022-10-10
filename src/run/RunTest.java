@@ -1,7 +1,5 @@
 package run;
 
-import grammar.*;
-import parser.LinearParserTD;
 import parser.Parser;
 
 import java.io.File;
@@ -9,7 +7,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static run.Parse.createCNFParser;
+import static run.Parse.createParser;
 
 public class RunTest {
 /*
@@ -27,12 +25,7 @@ public class RunTest {
         }
         System.out.println("Test params: [g: " + args[0] + ", l: " + args[1] + ", r: " + args[2] + ", m: " + args[3] + ", s: " + args[4] + "]");
 
-        boolean linearGrammar = Objects.equals(args[1], "l");
-        Parser p;
-        if (linearGrammar && Objects.equals(args[3], "tl")) // Linear parse
-            p = new LinearParserTD(new LinearGrammar(args[0]));
-        else // Grammar file non-linear
-            p = createCNFParser(new CNFGrammar(args[0], linearGrammar), args[3]);
+        Parser p = createParser(args[0], Objects.equals(args[1], "l"), args[3]);
 
         runTests(p, args[4], Integer.parseInt(args[2]));
     }

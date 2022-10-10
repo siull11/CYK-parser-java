@@ -22,7 +22,7 @@ public class CNFGrammar extends Grammar {
         for (String rule: rules) {
             char nt = rule.charAt(0);
             if (nts.containsKey(nt)) {
-                nts.put(nt, nts.get(nt) && rule.length() == 3);
+                nts.put(nt, nts.get(nt) && rule.length() == 3); //SÄTT T FALSE IST KSK LÖSER BUGG???
             } else {
                 nts.put(nt, rule.length() == 3); // BUGG OM DEN HAR FLERA REGLER SOM GÅR TILL 1 terminal!!!
             }
