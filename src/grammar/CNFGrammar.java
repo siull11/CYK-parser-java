@@ -21,7 +21,7 @@ public class CNFGrammar extends Grammar {
         // Check if non-terminals only produces a single terminal
         for (String rule: rules) {
             char nt = rule.charAt(0);
-            if (nts.containsKey(nt)) {;
+            if (nts.containsKey(nt)) {
                 nts.put(nt, nts.get(nt) && rule.length() == 3);
             } else {
                 nts.put(nt, rule.length() == 3); // BUGG OM DEN HAR FLERA REGLER SOM GÅR TILL 1 terminal!!!

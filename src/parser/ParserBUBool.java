@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 // CYK algorithm bottom-up implementation (with array of booleans)
 public class ParserBUBool implements Parser {
-    private CNFGrammar g;
+    private final CNFGrammar g;
     private long counter;
 
     public ParserBUBool(CNFGrammar g) {

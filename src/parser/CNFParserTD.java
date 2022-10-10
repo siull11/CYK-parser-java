@@ -4,7 +4,7 @@ import grammar.CNFGrammar;
 
 // CYK algorithm top-down implementation
 public class CNFParserTD extends ParserTD {
-    private CNFGrammar g;
+    private final CNFGrammar g;
 
     public CNFParserTD(CNFGrammar g) {
         this.g = g;

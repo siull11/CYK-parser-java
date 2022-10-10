@@ -4,7 +4,7 @@ import grammar.LinearGrammar;
 
 // CYK algorithm top-down implementation for linear grammars
 public class LinearParserTD extends ParserTD {
-    private LinearGrammar g;
+    private final LinearGrammar g;
 
     public LinearParserTD(LinearGrammar g) {
         this.g = g;

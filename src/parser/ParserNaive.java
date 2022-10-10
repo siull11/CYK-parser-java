@@ -4,7 +4,7 @@ import grammar.CNFGrammar;
 
 // CYK algorithm naive implementation
 public class ParserNaive implements Parser {
-    private CNFGrammar g;
+    private final CNFGrammar g;
     private long counter;
     private String s;
 

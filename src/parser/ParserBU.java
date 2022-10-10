@@ -8,7 +8,7 @@ import java.util.List;
 
 // CYK algorithm bottom-up implementation (with array of integers)
 public class ParserBU implements Parser {
-    private CNFGrammar g;
+    private final CNFGrammar g;
     private long counter;
 
     public ParserBU(CNFGrammar g) {
