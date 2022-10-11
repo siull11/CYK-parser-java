@@ -30,19 +30,19 @@ public class ParserBU implements Parser {
             table[i][0] = T_to_NTs.get(t);
         }
         // Fill rest of the table
-        for (int y = 1; y < n; y++) { // loop over rows
-            for (int x = 0; x < n-y; x++) { // loop over columns
+        for (int y = 1; y < n; y++) { // Loop over rows
+            for (int x = 0; x < n-y; x++) { // Loop over columns
                 HashSet<Integer> newCell = new HashSet<>();
 
-                for (int i = 0; i < y; i++) { // loop over child cells
+                for (int i = 0; i < y; i++) { // Loop over child cells
                     counter++; // Count number of loops
                     Integer[] under = table[x][i];
                     Integer[] diagonal = table[x+i+1][y-i-1];
 
                     if (under == null || diagonal == null) continue;
 
-                    for (int u: under) { // loop over non-terminals under
-                        for (int d: diagonal) { // loop over non-terminals diagonal
+                    for (int u: under) { // Loop over non-terminals under
+                        for (int d: diagonal) { // Loop over non-terminals diagonal
 
                             Integer[] nts = NTs_to_NT[u][d];
                             if (nts != null) {

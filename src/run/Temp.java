@@ -21,7 +21,7 @@ public class Temp {
         System.out.println(cg);
         */
 
-        String input = "((((((())(()";
+        String input = "(((((((()";
         CNFGrammar g = new CNFGrammar("dyck.txt", false);
         ParserBUError p = new ParserBUError(g);
         boolean accept = p.parse(input);

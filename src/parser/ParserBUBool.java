@@ -32,22 +32,22 @@ public class ParserBUBool implements Parser {
         }
 
         // Fill rest of the table
-        for (int y = 1; y < n; y++) { // loop over rows
-            for (int x = 0; x < n-y; x++) { // loop over columns
+        for (int y = 1; y < n; y++) { // Loop over rows
+            for (int x = 0; x < n-y; x++) { // Loop over columns
                 boolean[] newCell = new boolean[numNT];
 
-                for (int i = 0; i < y; i++) { // loop over child cells
+                for (int i = 0; i < y; i++) { // Loop over child cells
                     counter++; // Count number of loops
                     boolean[] under = table[x][i];
                     boolean[] diagonal = table[x+i+1][y-i-1];
 
-                    for (int u = 0; u < numNT; u++) { // loop over non-terminals under
+                    for (int u = 0; u < numNT; u++) { // Loop over non-terminals under
                         if (!under[u]) continue;
 
-                        for (int d = 0; d < numNT; d++) { // loop over non-terminals diagonal
+                        for (int d = 0; d < numNT; d++) { // Loop over non-terminals diagonal
                             if (!diagonal[d]) continue;
 
-                            Integer[] nts = NTs_to_NT[u][d]; // get non-terminals that produce u and d
+                            Integer[] nts = NTs_to_NT[u][d]; // Get non-terminals that produce u and d
                             if (nts == null) continue;
 
                             for (int nt: nts) newCell[nt] = true;
