@@ -154,4 +154,8 @@ public class CNFGrammar extends Grammar {
     public HashMap<Character, Integer[]> getT_to_NTs() {
         return T_to_NTs;
     }
+
+    public char[][] getNT_to_Ts() {
+       return NT_to_Ts;
+    }
 }
