@@ -9,9 +9,25 @@ Parse, RuntTest, TestStrings
 !!! (inkl create jar, run jar)
 
 
-### Format for grammar file:
-(first nt = start nt!)
-!!!!
+### Grammar file:
+All grammar files must be located in the folder "resources/grammars/". They are allowed to have any file extension.
+- The first non-terminal that occurs in the grammar is the start symbol.
+- No duplicate rules are allowed.
+- All capital characters are non-terminals and all other ascii characters are terminals.
+#### CNF
+Rules are written in CNF (Chomsky Normal Form) with two types of rules on the following format:
+```
+S SS
+S s
+```
+#### Linear
+Rules are written in "linear CNF form" with three types of rules on the following format:
+```
+S sS
+S Ss
+S s
+```
+
 
 ### Format for input string file:
 !!!!
@@ -40,6 +56,7 @@ Runs the tests in testFile (in the tests folder) with amount of runs to average 
 - `-l` or `--labels` to set list of labels for plots, required <br>
 - `-p` or `--path` to set path to files to plot <br>
 - `-d` or `--degree` to set degree of x to divide y with for plots, default=0 <br>
+- `-b` or `--base` to set a base for a logarithm to preform on y, default=0 (which means no log) <br>
 - `-x` or `--xlabel` to set xlabel for figure, default='length' <br>
 - `-y` or `--ylabel` to set ylabel for figure, default='time [s]' <br>
 

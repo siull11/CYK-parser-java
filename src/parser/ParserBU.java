@@ -16,7 +16,7 @@ public class ParserBU implements Parser {
     }
 
     @Override
-    public boolean parse(String s) {
+    public boolean parse(String s) { // ÄNDRA TILL ATT LOOPA ÖVER REGLERNA!!!
         counter = 0;
         int n = s.length();
         HashMap<Character, Integer[]> T_to_NTs = g.getT_to_NTs();
@@ -34,7 +34,7 @@ public class ParserBU implements Parser {
             for (int x = 0; x < n-y; x++) { // Loop over columns
                 HashSet<Integer> newCell = new HashSet<>();
 
-                for (int i = 0; i < y; i++) { // Loop over child cells
+                for (int i = 0; i < y; i++) { // Loop over child cells      ÄNDRA DENNA TILL LOOP ÖVER ICKETERMINALER!!! (adda continue när match hitas)
                     counter++; // Count number of loops
                     Integer[] under = table[x][i];
                     Integer[] diagonal = table[x+i+1][y-i-1];

@@ -14,26 +14,21 @@ public class CNFGrammar extends Grammar {
         else parseGrammar();
     }
 
-    private void parseLinearGrammar() { // FIXA BUGG!!!
+    private void parseLinearGrammar() {
         HashMap<Character, Boolean> nts = new HashMap<>();
         HashMap<Character, Character> TtoNT = new HashMap<>();
 
         // Check if non-terminals only produces a single terminal
         for (String rule: rules) {
             char nt = rule.charAt(0);
-            if (nts.containsKey(nt)) {
-                nts.put(nt, nts.get(nt) && rule.length() == 3); //SÄTT T FALSE IST KSK LÖSER BUGG???
-            } else {
-                nts.put(nt, rule.length() == 3); // BUGG OM DEN HAR FLERA REGLER SOM GÅR TILL 1 terminal!!!
-            }
+            if (nts.containsKey(nt)) nts.put(nt, false);
+            else nts.put(nt, rule.length() == 3);
         }
 
         // Add all non-terminal to terminal rules in data structure
         for (String rule: rules) {
             char nt = rule.charAt(0);
-            if (rule.length() == 3 && nts.get(nt)) {
-                TtoNT.put(rule.charAt(2), nt);
-            }
+            if (rule.length() == 3 && nts.get(nt)) TtoNT.put(rule.charAt(2), nt);
         }
 
         ArrayList<String> rulesCNF = new ArrayList<>();
@@ -43,14 +38,14 @@ public class CNFGrammar extends Grammar {
             if (rule.length() == 4) { // Produces non-terminal & terminal
                 char t = rule.charAt(Character.isUpperCase(rule.charAt(3)) ? 2 : 3);
                 char nt = 'A';
-                if (TtoNT.containsKey(t)) { // HÄR ÄR NOG NÅGOT FEL OXÅ!!!
+                if (TtoNT.containsKey(t)) {
                     nt = TtoNT.get(t);
                 } else {
                     while (nts.containsKey(nt)) nt++; // HANDLE EDGE CASE FOR WHEN NTS run out???
                     nts.put(nt, true);
                 }
 
-                if (Character.isUpperCase(rule.charAt(3))) { // SAMMA DETTA MÅSTE NOG ÄNDRAS OXÅ
+                if (Character.isUpperCase(rule.charAt(3))) {
                     rulesCNF.add(rule.charAt(0) + " " + nt + rule.charAt(3));
                 } else {
                     rulesCNF.add(rule.charAt(0) + " " + rule.charAt(2) + nt);

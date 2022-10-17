@@ -6,22 +6,21 @@ import parser.*;
 public class Temp {
     public static void main(String[] args) {
 // Language from spec: (ab?)^nbc^n
-        /*
+
         String input = "ababbcc"; // "aabaaaabcccccc";
 
-        LinearGrammar lg = new LinearGrammar("linearGrammarEx.txt");
+        LinearGrammar lg = new LinearGrammar("linear_ex.txt");
         LinearParserTD lp = new LinearParserTD(lg);
         System.out.println(lp.parse(input) + ", " + lp.getCounter());
         System.out.println(lg);
 
 
-        CNFGrammar cg = new CNFGrammar("linearGrammarEx.txt", true);
+        CNFGrammar cg = new CNFGrammar("linear_ex.txt", true);
         Parser cp = new CNFParserTD(cg);
         System.out.println(cp.parse(input) + ", " + cp.getCounter());
         System.out.println(cg);
-        */
-
-        String input = "(((((((()";
+/*
+        String input = "()(()((()";
         CNFGrammar g = new CNFGrammar("dyck.txt", false);
         ParserBUError p = new ParserBUError(g);
         boolean accept = p.parse(input);
@@ -36,5 +35,6 @@ public class Temp {
         }
         System.out.println(accept + ", " + p.getCounter());
         System.out.println(g);
+*/
     }
 }
